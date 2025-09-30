@@ -1,0 +1,94 @@
+@import "./global.css";
+@import "./search.css";
+@import "./results.css";
+
+main {
+    .search {
+        img {
+            height: 200px;
+        }
+    }
+
+    .results {
+        .status-bar {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid var(--color-grey);
+
+            div {
+                display: flex;
+                align-items: center;
+                height: 30px;
+            }
+
+            div:first-child {
+                display: flex;
+                text-align: left;
+                gap: 4px;
+
+                p {
+                    text-wrap: nowrap;
+                }
+
+                button {
+                    width: 30px;
+                }
+                
+                input {
+                    text-align: center;
+                    width: 60px;
+                    height: 26px;
+                }
+            }
+            
+            div:last-child {
+                width: 100%;
+
+                p {
+                    width: 100%;
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    .book {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+
+        div:first-child {
+            padding-right: 24px;    
+        }
+
+        div:last-child {
+            div, img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            div {
+                display: flex;
+                gap: 4px;
+                margin-top: 4px;
+                height: 30px;
+            }
+        }
+
+        h2 {
+            margin-bottom: 0;
+
+            + p {
+                margin-top: 0;
+            }
+        }
+
+        .year {
+            margin-top: 0;
+        }
+
+        p {
+            text-wrap: wrap;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+header {
+    margin: auto;
+    width: fit-content;
+
+    menu {
+        padding: 0;
+
+        ul {
+            display: flex;
+            padding: 0;
+            gap: 12px;
+
+            li {
+                list-style: none;
+
+                button {
+                    width: 200px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}

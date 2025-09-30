@@ -1,0 +1,18 @@
+@import "./global.css";
+
+main {
+    width: 600px;
+
+    form {
+        .fff {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .double {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4px;
+        }
+    }
+}

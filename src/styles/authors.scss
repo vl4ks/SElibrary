@@ -1,0 +1,29 @@
+@import "./global.css";
+
+main {
+    width: 600px;
+
+    select {
+        background: var(--color-white);
+        height: 30px;
+        width: 100%;
+    }
+
+    .birthday {
+        margin-top: 4px;
+        margin-bottom: 24px;
+    }
+
+    h2 {
+        margin-bottom: 0;
+        
+        + p {
+            margin-top: 0;
+        }
+    }
+
+    button {
+        width: 100px;
+        margin-top: 12px;
+    }
+}

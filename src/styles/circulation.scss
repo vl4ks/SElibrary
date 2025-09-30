@@ -1,0 +1,75 @@
+@import "./global.css";
+@import "./search.css";
+@import "./results.css";
+
+main {
+    .search {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        img {
+            height: 200px;
+        }
+
+        .customer {
+            h1 {
+                padding-left: 0;
+            }
+        }
+    }
+    
+    .circulation {
+        padding: 0;
+
+        .results {
+            .table-wrapper {
+                min-height: 120px;
+                max-height: 120px;
+            }
+        }
+
+        .issue-return {
+            padding: 12px;
+
+            h1 {
+                padding-left: 0;
+            }
+
+            p {
+                margin: 4px 0;
+            }
+        }
+
+        .bookmanage {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+        }
+
+        .history {
+            border-bottom: none;
+        }
+    
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 4px;
+
+            button {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        .renew {
+            height: 30px;
+            padding: 12px;
+        }
+    }
+
+    h1 {
+        padding-left: 12px;
+    }
+}

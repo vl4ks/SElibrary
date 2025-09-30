@@ -1,0 +1,33 @@
+@import "./global.css";
+@import "./search.css";
+@import "./results.css";
+
+main {
+    padding: 12px 0;
+    padding-bottom: 0;
+
+    .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 12px;
+    }
+
+    .tabs {
+        padding: 12px;
+        width: 50%;
+    }
+
+    .results {
+        border-bottom: none;
+
+        .table-wrapper {
+            min-height: 500px;    
+            max-height: 500px;
+        }
+    }
+
+    .window {
+        border-top: 1px solid var(--color-grey);
+    }
+}

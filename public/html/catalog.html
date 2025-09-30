@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/catalog.css">
+    <title>Catalog</title>
+</head>
+<body>
+    <header> <!-- Move to template later -->
+        <menu>
+            <ul>
+                <li><button><a href="./catalog.html">Catalog</a></button></li>
+                <li><button><a href="./customers.html">Manage Customers</a></button></li>
+                <li><button><a href="./circulation.html">Circulation</a></button></li>
+                <li><button><a href="./reports.html">Reports</a></button></li>
+                <li><button><a href="./login.html">Login</a></button></li>
+            </ul>
+        </menu>
+    </header>
+
+    <main class="window">
+        <section class="search">
+            <div class="logo">
+                <img src="../img/logo.png" alt="logo">
+            </div>
+            <form>
+                <div>
+                    <label for="title">Title</label>
+                    <input id="title" type="text">
+                </div>
+                <div>
+                    <label for="author">Author</label>
+                    <input id="author" type="text">
+                </div>
+                <div>
+                    <label for="subject">Subject</label>
+                    <input id="subject" type="text">
+                </div>
+                <div>
+                    <div></div>
+                    <div class="buttons">
+                        <button>Search</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        
+        <div>
+            <section class="results">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Authors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                            <tr>
+                                <td>$Title$</td>
+                                <td>$Author$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="status-bar">
+                    <div>
+                        <p>Page</p>
+                        <button><</button>
+                        <input type="text" value="1">
+                        <button>></button>
+                        <p>of $MaxNumberPages$</p>
+                    </div>
+                    <div>
+                        <p>$BookCount$ Books found</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="book">
+                <div>
+                    <h1>$BookName$</h1>
+
+                    <a href="./authors.html">by $Author$</a>
+                    <p class="year">first published: $Year$</p>
+
+                    <h2>Description</h4>
+                    <p>$Description$</p>
+
+                    <h2>Subjects</h4>
+                    <p>$Subjects$</p>
+                </div>
+                <div>
+                    <img src="../img/bookpreview.png" alt="">
+                    <div>
+                        <button><</button>
+                        <button>></button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

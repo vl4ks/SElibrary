@@ -1,0 +1,26 @@
+@import "./global.css";
+@import "./search.css";
+@import "./results.css";
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0;
+
+    .search {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .manage {
+            margin-top: auto;
+        }
+    }
+
+    .results {
+        .table-wrapper {
+            min-height: 600px;    
+            max-height: 600px;
+        }
+    }
+}

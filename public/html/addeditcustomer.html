@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/addeditcustomer.css">
+    <title>Add / Edit customer</title>
+</head>
+<body>
+    <header> <!-- Move to template later -->
+        <menu>
+            <ul>
+                <li><button><a href="./catalog.html">Catalog</a></button></li>
+                <li><button><a href="./customers.html">Manage Customers</a></button></li>
+                <li><button><a href="./circulation.html">Circulation</a></button></li>
+                <li><button><a href="./reports.html">Reports</a></button></li>
+                <li><button><a href="./login.html">Login</a></button></li>
+            </ul>
+        </menu>
+    </header>
+
+    <main>
+        <form>
+            <div>
+                <label for="id">ID</label>
+                <input id="id" disabled>
+            </div>
+            <div>
+                <label for="name">Name</label>
+                <input id="name" type="text">
+            </div>
+            <div>
+                <label for="address">Address</label>
+                <input id="address" type="text">
+            </div>
+            <div>
+                <div class="" style="display: flex; gap: 4px;">
+                    <label for="zip">Zip</label>
+                    <label>/</label>
+                    <label for="city">City</label>
+                </div>
+                <div class="double">
+                    <input id="zip" type="text">
+                    <input id="city" type="text">
+                </div>
+            </div>
+            <div>
+                <label for="phone">Phone</label>
+                <input id="phone" type="text">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input id="email" type="email">
+            </div>
+            <div>
+                <div></div>
+                <div class="buttons">
+                    <button><a href="./customers.html">Save</a></button>
+                    <button><a href="./customers.html">Cancel</a></button>
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
