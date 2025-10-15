@@ -5,7 +5,7 @@ class BookRepository {
         
     }
     
-    async findById() {
+    async findById(id) {
 
     }
 }
