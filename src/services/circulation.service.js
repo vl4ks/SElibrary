@@ -2,11 +2,11 @@ const customerRepository = require("../repositories/customer.repository")
 const historyRepository = require("../repositories/history.repository")
 
 class CirculationService {
-    async getCurrentIssues() {
+    async getCurrentIssues(customerId) {
 
     }
 
-    async getHistory() {
+    async getHistory(customerId) {
         
     }
 

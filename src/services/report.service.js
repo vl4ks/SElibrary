@@ -9,6 +9,10 @@ class ReportService {
         
     }
 
+    async search(bookId) {
+
+    }
+
     async export() {
 
     }

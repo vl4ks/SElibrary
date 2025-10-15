@@ -30,7 +30,7 @@
             <button class="reminders-button">Reminders</button>
             <button class="book-history-button">Book history</button>
         </div>
-        <section class="results reminders">
+        <section class="results reminders" style="display: none;"> <!-- Temp style-->
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -172,12 +172,19 @@
             </div>
         </section>
 
-        <section class="book-history window" style="display: none;"> <!-- Temp style-->
+        <section class="book-history window">
             <section class="search">
             <form>
                 <div>
                     <label for="bookid">Book ID</label>
                     <input id="bookid" disabled>
+                </div>
+                <div>
+                    <label for="bookname">Book name</label>
+                    <input id="bookname" disabled>
+                </div>
+                <div class="buttons">
+                    <button>Search</button>
                 </div>
             </form>
             <h1>$Title$</h1>

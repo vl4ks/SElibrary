@@ -8,8 +8,14 @@ class BookRepository {
     async findById(id) {
 
     }
+
+    async findByParameters(title, author, subject) {
+
+    }
 }
 
-// + author link
-// + book subject
-// + book cover
+/*
+    + author link
+    + book subject
+    + book cover
+*/
