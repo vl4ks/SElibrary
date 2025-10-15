@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/vl4ks/SElibrary#readme",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
