@@ -1,17 +1,20 @@
 const bookRepository = require("../repositories/book.repository")
 const authorRepository = require("../repositories/author.repository")
-const subjectRepository = require("../repositories/subject.repository")
 
 class CatalogService {
-    async getAllBooks() { // pagination
-
+    async search(title, author, subject) { // call on start without parameters in controller
+        // pagination
+        // bookRepository.findByParameters(title, author, subject)
+        // return books[]
     }
 
     async getBook(id) {
-
+        // bookRepository.findById(id)
+        // return book
     }
-    
-    async search(title, author, subject) {
 
+    async getAuthor(id) {
+        // authorRepository.findById(id)
+        // return author
     }
 }

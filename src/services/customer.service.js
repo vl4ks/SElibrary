@@ -1,19 +1,16 @@
 const customerRepository = require("../repositories/customer.repository")
 
 class ManageCustomerService {
-    async getAllCustomers() {
-        
-    }
-
-    async search(customerId, name) {
-
+    async search(customerId, name) { // call on start without parameters in controller
+        // customerRepository.findByParameters(customerId, name)
+        // return customers[]
     }
     
-    async add(/*customer model from controller*/) {
-
+    async add(customer) {
+        // customerRepository.create()
     }
 
-    async edit(customerId, /*customer model from controller*/) {
-
+    async edit(customer) {
+        // customerRepository.update()
     }
 }

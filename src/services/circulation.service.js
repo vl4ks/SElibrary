@@ -1,28 +1,28 @@
-const customerRepository = require("../repositories/customer.repository")
 const historyRepository = require("../repositories/history.repository")
 
 class CirculationService {
-    async getCurrentIssues(customerId) {
+    async circulation(customerId) {
+        // historyRepository.findByCustomerId(customerId)
+        // return currentIssue[], history[]
+    }
+
+    /*async getCurrentIssues(customerId) {
 
     }
 
     async getHistory(customerId) {
         
-    }
-
-    async circulation(customerId) {
-
-    }
+    }*/
     
-    async issue(bookId) {
-
+    async issue(bookId, customerId) {
+        // historyRepository.create()
     }
 
-    async return(bookId) {
-
+    async return(bookId, customerId) {
+        // historyRepository.create() ?
     }
 
     async renew(bookId) {
-
+        // historyRepository.create() ?
     }
 }
