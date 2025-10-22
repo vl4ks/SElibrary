@@ -1,11 +1,20 @@
-require('dotenv').config()
+const createApp = require('./src/app')
 
-const express = require("express")
-const path = require("path")
-const app = express()
+const port = process.env.PORT
 
-app.use(express.static(path.join(__dirname, "public")))
+const app = createApp()
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on http://localhost:${process.env.PORT}`)
+const server = app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`)
+})
+
+function shutdown(signal) {
+  console.log(`Received ${signal}, shutting down...`)
+  server.close(() => process.exit(0))
+}
+
+process.on('SIGINT', () => shutdown('SIGINT'))
+process.on('SIGTERM', () => shutdown('SIGTERM'))
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason)
 })
