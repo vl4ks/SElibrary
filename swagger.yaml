@@ -3,11 +3,54 @@ info:
   title: SElibrary API
   version: 1.0.0
 
-paths: {}
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful login (redirect)
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum:
+                      - invalid_credentials
+
+  /api/auth/logout:
+    get:
+      tags:
+        - Auth
+      summary: Logout user
+      responses:
+        '200':
+          description: Successful logout (redirect)
 
 tags:
   - name: Auth
   - name: Catalog
   - name: Customer
-  - name: Сirculation
+  - name: Circulation
   - name: Report

@@ -16,7 +16,7 @@ class AuthController {
                 req.session.save(err => (err ? reject(err) : resolve()))
             })
 
-            return res.redirect('/catalog')
+            return res.json({ redirect: "/catalog" })
         } catch (error) {
             return next(error)
         }
@@ -24,7 +24,7 @@ class AuthController {
 
     async logout(req, res) {
         req.session.destroy(() => {
-            res.redirect('/catalog')
+            res.json({ redirect: "/catalog" })
         })
     }
 }
