@@ -43,15 +43,22 @@ function createApp() {
     })
 
     app.get('/', (req, res) => res.redirect('/catalog'))
-    app.get('/auth', (req, res) => res.render('auth', { user: req.session.user }))
-    app.get('/catalog', (req, res) => res.render('catalog', { user: req.session.user }))
+
+    const publicRoutes = [
+        { path: '/auth', view: 'auth' },
+        { path: '/catalog', view: 'catalog' },
+        { path: '/authors', view: 'authors' }
+    ]
+
+    publicRoutes.forEach(r => {
+        app.get(r.path, (req, res) => res.render(r.view, { user: req.session.user }))
+    })
 
     const protectedRoutes = [
-        { path: '/author', view: 'authors' },
-        { path: '/customer', view: 'customers' },
+        { path: '/customers', view: 'customers' },
         { path: '/addeditcustomer', view: 'addeditcustomer' },
         { path: '/circulation', view: 'circulation' },
-        { path: '/report', view: 'reports' }
+        { path: '/reports', view: 'reports' }
     ]
 
     protectedRoutes.forEach(r => {
