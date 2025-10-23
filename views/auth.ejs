@@ -4,7 +4,7 @@
     user,
     body: `
         <main>
-            <form method="POST" action="/api/auth/login">
+            <form id="loginForm">
                 <div>
                     <label for="username">Username</label>
                     <input id="username" name="username" type="text" required>
@@ -20,7 +20,8 @@
                     <button type="button" onclick="window.history.back()">Cancel</button>
                 </div>
             </form>
-
         </main>
+
+        <script src="/js/login.js"></script>
     `
 }) %>

@@ -2,7 +2,7 @@
     <menu>
         <ul>
             <% if (user) { %>
-                <li><button><a href="/api/auth/logout">Logout</a></button></li>
+                <li><button><a id="logoutButton">Logout</a></button></li>
             <% } else { %>
                 <li><button><a href="/auth">Login</a></button></li>
             <% } %>

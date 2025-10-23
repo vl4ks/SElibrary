@@ -43,7 +43,7 @@ paths:
     get:
       tags:
         - Auth
-      summary: Logout user
+      summary: User logout
       responses:
         '200':
           description: Successful logout (redirect)
