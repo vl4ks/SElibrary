@@ -6,7 +6,7 @@ info:
 paths: {}
 
 tags:
-  - name: Login
+  - name: Auth
   - name: Catalog
   - name: Customer
   - name: Сirculation

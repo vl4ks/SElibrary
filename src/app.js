@@ -23,7 +23,7 @@ function createApp() {
 
   const htmlDir = path.join(__dirname, '..', 'public', 'html')
   const htmlMap = {
-    '/login': 'login.html',
+    '/auth': 'auth.html',
     '/catalog': 'catalog.html',
     '/author': 'authors.html',
     '/customer': 'customers.html',
@@ -40,14 +40,14 @@ function createApp() {
     })
   })
 
-  //const loginRoutes = require('./routes/login.routes')
+  //const authRoutes = require('./routes/auth.routes')
   //const catalogRoutes = require('./routes/catalog.routes')
   //const customerRoutes = require('./routes/customer.routes')
   //const circulationRoutes = require('./routes/circulation.routes')
   //const reportRoutes = require('./routes/report.routes')
   const swaggerRoutes = require('./routes/swagger.routes')
 
-  //app.use('/api/login', loginRoutes)
+  //app.use('/api/auth', authRoutes)
   //app.use('/api/catalog', catalogRoutes)
   //app.use('/api/customer', customerRoutes)
   //app.use('/api/circulation', circulationRoutes)
