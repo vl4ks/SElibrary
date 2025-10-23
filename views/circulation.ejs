@@ -1,0 +1,153 @@
+<%- include('layout', {
+    title: 'Circulation',
+    stylesheet: 'circulation.css',
+    user,
+    body: `
+        <main class="window">
+            <section class="search">
+                <div>
+                    <div class="logo">
+                        <img src="../img/logo.png" alt="logo">
+                    </div>
+                        <form method="" action="">
+                        <div>
+                            <label for="customerid">Customer ID</label>
+                            <input id="customerid" type="text">
+                        </div>
+                        <div>
+                            <div></div>
+                            <div class="buttons">
+                                <button type="submit">Circulation</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="customer">
+                    <h1>$CustomerName$<br>($CustomerID$)</h1>
+                    <p>$Zip$ $Sity$</p>
+                    <div class="buttons">
+                        <button onClick="">Edit...</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="circulation">
+                <div class="issue-return">
+                    <h1>Issue / Return</h1>
+                    <div class="bookmanage">
+                        <form>
+                            <div>
+                                <label for="bookid">Book ID</label>
+                                <input id="bookid" disabled>
+                            </div>
+                            <div>
+                                <div></div>
+                                <p>Title: $Title$</p>
+                            </div>
+                        </form>
+                        <div class="buttons">
+                            <button onClick="">Issue</button>
+                            <button onClick="">Return</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h1>Current issues</h1>
+                    <section class="results current-issues">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Date of issue</th>
+                                        <th>Return until</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr>
+                                    <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <div class="bookmanage renew">
+                        <div></div>
+                        <div class="buttons">
+                            <button onClick="">Renew</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1>History</h1>
+                    <section class="results history">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Date of issue</th>
+                                        <th>Return until</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr>
+                                    <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr> <tr>
+                                        <td>$Title$</td>
+                                        <td>$DateOfIssue$</td>
+                                        <td>$ReturnUntil$</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+    `
+}) %>

@@ -1,0 +1,49 @@
+<%- include('layout', {
+    title: 'Add / Edit customer',
+    stylesheet: 'addeditcustomer.css',
+    user,
+    body: `
+        <main>
+            <form>
+                <div>
+                    <label for="id">ID</label>
+                    <input id="id" disabled>
+                </div>
+                <div>
+                    <label for="name">Name</label>
+                    <input id="name" type="text">
+                </div>
+                <div>
+                    <label for="address">Address</label>
+                    <input id="address" type="text">
+                </div>
+                <div>
+                    <div class="" style="display: flex; gap: 4px;">
+                        <label for="zip">Zip</label>
+                        <label>/</label>
+                        <label for="city">City</label>
+                    </div>
+                    <div class="double">
+                        <input id="zip" type="text">
+                        <input id="city" type="text">
+                    </div>
+                </div>
+                <div>
+                    <label for="phone">Phone</label>
+                    <input id="phone" type="text">
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" type="email">
+                </div>
+                <div>
+                    <div></div>
+                    <div class="buttons">
+                        <button type="submit">Save</button>
+                        <button type="button" onclick="window.history.back()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    `
+}) %>

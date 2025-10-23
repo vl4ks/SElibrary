@@ -7,60 +7,82 @@ const PgSession = require('connect-pg-simple')(session)
 const dbPool = require('../db')
 
 function createApp() {
-  const app = express()
+    const app = express()
 
-  app.use(express.json())
-  app.use(express.urlencoded({ extended: true }))
-  app.use(session({
-    //store: new PgSession({ pool: dbPool }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 12 } // 12 hours
-  }))
+    app.use(express.json())
+    app.use(express.urlencoded({ extended: true }))
 
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+    app.set('view engine', 'ejs')
+    app.set('views', path.join(__dirname, '..', 'views'))
 
-  const htmlDir = path.join(__dirname, '..', 'public', 'html')
-  const htmlMap = {
-    '/auth': 'auth.html',
-    '/catalog': 'catalog.html',
-    '/author': 'authors.html',
-    '/customer': 'customers.html',
-    '/addeditcustomer': 'addeditcustomer.html',
-    '/circulation': 'circulation.html',
-    '/report': 'reports.html'
-  }
+    app.use(session({
+        //store: new PgSession({ pool: dbPool }),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: { maxAge: 1000 * 60 * 60 * 12 } // 12 hours
+    }))
 
-  app.get('/', (req, res) => res.redirect('/catalog'))
+    app.use(express.static(path.join(__dirname, '..', 'public')))
 
-  Object.entries(htmlMap).forEach(([route, file]) => {
-    app.get(route, (req, res, next) => {
-      res.sendFile(path.join(htmlDir, file), err => { if (err) next(err) })
+    const requireLogin = (req, res, next) => {
+        if (!req.session.user) {
+            return res.redirect('/auth')
+        }
+        next()
+    }
+
+    app.use((req, res, next) => {
+        const publicPaths = ['/auth', '/api/auth/login', '/api/auth/logout', '/catalog', '/']
+        const isPublic = publicPaths.some(p => req.path.startsWith(p))
+
+        if (!req.session.user && !isPublic) {
+            return res.redirect('/auth')
+        }
+        next()
     })
-  })
 
-  //const authRoutes = require('./routes/auth.routes')
-  //const catalogRoutes = require('./routes/catalog.routes')
-  //const customerRoutes = require('./routes/customer.routes')
-  //const circulationRoutes = require('./routes/circulation.routes')
-  //const reportRoutes = require('./routes/report.routes')
-  const swaggerRoutes = require('./routes/swagger.routes')
+    app.get('/', (req, res) => res.redirect('/catalog'))
+    app.get('/auth', (req, res) => res.render('auth', { user: req.session.user }))
+    app.get('/catalog', (req, res) => res.render('catalog', { user: req.session.user }))
 
-  //app.use('/api/auth', authRoutes)
-  //app.use('/api/catalog', catalogRoutes)
-  //app.use('/api/customer', customerRoutes)
-  //app.use('/api/circulation', circulationRoutes)
-  //app.use('/api/report', reportRoutes)
-  app.use(swaggerRoutes)
+    const protectedRoutes = [
+        { path: '/author', view: 'authors' },
+        { path: '/customer', view: 'customers' },
+        { path: '/addeditcustomer', view: 'addeditcustomer' },
+        { path: '/circulation', view: 'circulation' },
+        { path: '/report', view: 'reports' }
+    ]
 
-  app.use((err, req, res, next) => {
-    console.error(err)
-    if (req.path.startsWith('/api')) return res.status(500).json({ error: 'internal_server_error' })
-    next(err)
-  })
+    protectedRoutes.forEach(r => {
+        app.get(r.path, requireLogin, (req, res) => {
+            res.render(r.view, { user: req.session.user })
+        })
+    })
 
-  return app
+    //const authRoutes = require('./routes/auth.routes')
+    //const catalogRoutes = require('./routes/catalog.routes')
+    //const customerRoutes = require('./routes/customer.routes')
+    //const circulationRoutes = require('./routes/circulation.routes')
+    //const reportRoutes = require('./routes/report.routes')
+    const swaggerRoutes = require('./routes/swagger.routes')
+
+    //app.use('/api/auth', authRoutes)
+    //app.use('/api/catalog', catalogRoutes)
+    //app.use('/api/customer', customerRoutes)
+    //app.use('/api/circulation', circulationRoutes)
+    //app.use('/api/report', reportRoutes)
+    app.use(swaggerRoutes)
+
+    app.use((err, req, res, next) => {
+        console.error(err)
+        if (req.path.startsWith('/api')) {
+            return res.status(500).json({ error: 'internal_server_error' })
+        }
+        next(err)
+    })
+
+    return app
 }
 
 module.exports = createApp
