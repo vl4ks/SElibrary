@@ -8,7 +8,7 @@
                 <div class="logo">
                     <img src="../img/logo.png" alt="logo">
                 </div>
-                <form method="" action="">
+                <form id="searchForm">
                     <div>
                         <label for="title">Title</label>
                         <input id="title" type="text">
@@ -21,11 +21,8 @@
                         <label for="subject">Subject</label>
                         <input id="subject" type="text">
                     </div>
-                    <div>
-                        <div></div>
-                        <div class="buttons">
-                            <button type="submit">Search</button>
-                        </div>
+                    <div class="buttons">
+                        <button type="submit" id="searchButton">Search</button>
                     </div>
                 </form>
             </section>
@@ -33,98 +30,57 @@
             <div>
                 <section class="results">
                     <div class="table-wrapper">
-                        <table>
+                        <table id="bookTable">
                             <thead>
                                 <tr>
                                     <th>Title</th>
                                     <th>Authors</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Title$</td>
-                                    <td>$Author$</td>
-                                </tr>
-                            </tbody>
+                            <tbody id="bookTableBody"></tbody>
                         </table>
                     </div>
 
                     <div class="status-bar">
                         <div>
                             <p>Page</p>
-                            <button><</button>
-                            <input type="text" value="1">
-                            <button>></button>
-                            <p>of $MaxNumberPages$</p>
+                            <button id="prevPage"><</button>
+                            <input id="currentPage" type="text" value="1">
+                            <button id="nextPage">></button>
+                            <p>of <span id="maxPages"></span></p>
                         </div>
                         <div>
-                            <p>$BookCount$ Books found</p>
+                            <p><span id="bookCount"></span> Books found</p>
                         </div>
                     </div>
                 </section>
 
-                <section class="book">
-                    <div>
-                        <h1>$BookName$</h1>
+                <section class="book" id="bookSection">
+                    <div class="book-info">
+                        <h1 id="bookTitle"></h1>
 
-                        <a href="/authors">by $Author$</a>
-                        <p class="year">first published: $Year$</p>
+                        <p>by <span id="bookAuthors"></span></p>
+                        <p class="year">first published: <span id="bookYear"></span></p>
 
-                        <h2>Description</h4>
-                        <p>$Description$</p>
+                        <h2>Description</h2>
+                        <p id="bookDescription"></p>
 
-                        <h2>Subjects</h4>
-                        <p>$Subjects$</p>
+                        <h2>Subjects</h2>
+                        <p id="bookSubjects"></p>
                     </div>
-                    <div>
-                        <img src="../img/bookpreview.png" alt="">
-                        <div>
-                            <button><</button>
-                            <button>></button>
+
+                    <div class="book-cover">
+                        <img id="bookCoverImage" alt="Book cover">
+                        <div class="cover-nav">
+                            <button id="prevCover"><</button>
+                            <button id="nextCover">></button>
                         </div>
                     </div>
                 </section>
             </div>
         </main>
+
+        <script src="/js/catalog.search.js"></script>
+        <script src="/js/catalog.book.js"></script>
     `
 }) %>

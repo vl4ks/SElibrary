@@ -47,7 +47,7 @@ function createApp() {
     const publicRoutes = [
         { path: '/auth', view: 'auth' },
         { path: '/catalog', view: 'catalog' },
-        { path: '/authors', view: 'authors' }
+        { path: '/catalog/authors/:bookId', view: 'authors' }
     ]
 
     publicRoutes.forEach(r => {
@@ -68,14 +68,14 @@ function createApp() {
     })
 
     const authRoutes = require('./routes/auth.routes')
-    //const catalogRoutes = require('./routes/catalog.routes')
+    const catalogRoutes = require('./routes/catalog.routes')
     //const customerRoutes = require('./routes/customer.routes')
     //const circulationRoutes = require('./routes/circulation.routes')
     //const reportRoutes = require('./routes/report.routes')
     const swaggerRoutes = require('./routes/swagger.routes')
 
     app.use('/api/auth', authRoutes)
-    //app.use('/api/catalog', catalogRoutes)
+    app.use('/api/catalog', catalogRoutes)
     //app.use('/api/customer', customerRoutes)
     //app.use('/api/circulation', circulationRoutes)
     //app.use('/api/report', reportRoutes)

@@ -4,16 +4,14 @@
     user,
     body: `
         <main>
-            <select name="" id="">
-                <option value="">$Author1$</option>
-                <option value="">$Author2$</option>
-                <option value="">$Author3$</option>
-            </select>
-            <p class="birthday">$Birthday$</p>
+            <select id="authorSelect"></select>
+            <p id="authorBirthday" class="birthday"></p>
             <h2>Bio</h2>
-            <p>$Bio$</p>
-            <a href="#">Learn more on Wikipedia</a>
+            <p id="authorBio"></p>
+            <a id="wikiLink" target="_blank">Learn more on Wikipedia</a>
             <button type="button" onclick="window.history.back()">Close</button>
         </main>
+
+        <script src="/js/authors.js"></script>
     `
 }) %>
