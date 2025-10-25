@@ -7,14 +7,14 @@
             <div class="head">
                 <h1>Reports</h1>
                 <div class="buttons">
-                    <button>Export</button>
+                    <button id="exportButton" style="display: none;">Export</button>
                 </div>
             </div>
             <div class="buttons tabs">
-                <button class="reminders-button" onClick="">Reminders</button>
-                <button class="book-history-button" onClick="">Book history</button>
+                <button id="remindersButton" onClick="">Reminders</button>
+                <button id="bookHistoryButton" onClick="">Book history</button>
             </div>
-            <section class="results reminders" style="display: none;"> <!-- Temp style-->
+            <section id="remindersSection" class="results reminders">
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -26,156 +26,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
-                            <tr>
-                                <td>$Title$</td>
-                                <td>$Customer$</td>
-                                <td>$DateOfIssue$</td>
-                                <td>$ReturnUntil$</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <section class="book-history window">
+            <section id="bookHistorySection" class="book-history window">
                 <section class="search">
-                    <form method="" action="">
+                    <form id="bookHistoryForm" method="" action="">
                         <div>
                             <label for="bookid">Book ID</label>
-                            <input id="bookid" disabled>
+                            <input id="bookIdInput" disabled>
                         </div>
                         <div>
                             <label for="bookname">Book title</label>
-                            <input id="bookname" disabled>
+                            <input id="bookTitleInput" disabled>
                         </div>
                         <div class="buttons">
                             <button type="submit">Search</button>
                         </div>
                     </form>
-                    <h1>$Title$</h1>
-                    <p>$Subtitle$</p>
+                    <h1 id="bookTitle"></h1>
                 </section>
 
-                <section class="results reminders">
+                <section id="bookHistoryResults" class="results reminders">
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -186,111 +60,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
-                                <tr>
-                                    <td>$Customer$</td>
-                                    <td>$DateOfIssue$</td>
-                                    <td>$ReturnUntil$</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </section>
             </section>
         </main>
+
+        <script src="/js/reports.js"></script>
+        <script src="/js/reports.reminders.js"></script>
+        <script src="/js/reports.bookhistory.js"></script>
+        <script src="/js/reports.export.js"></script>
     `
 }) %>

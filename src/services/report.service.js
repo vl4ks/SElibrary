@@ -3,17 +3,18 @@ const bookRepository = require("../repositories/book.repository")
 
 class ReportService {
     async getReminders() {
-        // historyRepository.getAll()
-        // return reminders[]
+        const rows = await historyRepository.findByOverdue(true)
+        return await Promise.all(rows.map(async row => {
+            const book = await bookRepository.findById(row.book_id)
+            return { ...row, title: book.title }
+        }))
     }
 
     async search(bookId, bookTitle) {
-        // historyRepository.findByParameters(bookId, bookTitle)
-        // bookRepository.findById(bookId)
-        // return bookInfo, bookHistory[]
-    }
-
-    async export() {
-        
+        const rows = await historyRepository.findByParameters(bookId, bookTitle)
+        const book = await bookRepository.findById(bookId)
+        return { rows, book }
     }
 }
+
+module.exports = new ReportService()

@@ -71,14 +71,14 @@ function createApp() {
     const catalogRoutes = require('./routes/catalog.routes')
     //const customerRoutes = require('./routes/customer.routes')
     //const circulationRoutes = require('./routes/circulation.routes')
-    //const reportRoutes = require('./routes/report.routes')
+    const reportRoutes = require('./routes/report.routes')
     const swaggerRoutes = require('./routes/swagger.routes')
 
     app.use('/api/auth', authRoutes)
     app.use('/api/catalog', catalogRoutes)
     //app.use('/api/customer', customerRoutes)
     //app.use('/api/circulation', circulationRoutes)
-    //app.use('/api/report', reportRoutes)
+    app.use('/api/report', reportRoutes)
     app.use(swaggerRoutes)
 
     app.use((err, req, res, next) => {

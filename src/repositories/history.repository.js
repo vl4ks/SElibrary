@@ -2,15 +2,17 @@ const db = require("../../db")
 const History = require("../models/history")
 
 class HistoryRepository {
-    async getAll() {
+    async findByOverdue(flag) {
         const result = await db.query(`
             SELECT * FROM history
-            ORDER BY return_date ASC`
+            WHERE status = $1
+            ORDER BY return_date ASC`,
+            [flag]
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
-        return list 
+        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
+        return list
     }
 
     async findByParameters(book_id, book_title) {
@@ -36,7 +38,7 @@ class HistoryRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
+        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
         return list
     }
 
@@ -48,16 +50,16 @@ class HistoryRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
+        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
         return list
     }
 
     async create(history) {
         const result = await db.query(`
-            INSERT INTO history (book_id, issue_date, return_date, status, issued_by, received_by)
+            INSERT INTO history (book_id, customer_id, issue_date, return_date, status, issued_by, received_by)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING history_id`,
-            [history.book_id, history.issue_date, history.return_date, history.status, history.issued_by, history.received_by]
+            [history.book_id, history.customer_id, history.issue_date, history.return_date, history.status, history.issued_by, history.received_by]
         )
         return result.rows[0].history_id
     }
