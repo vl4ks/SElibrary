@@ -48,6 +48,170 @@ paths:
         '200':
           description: Successful logout (redirect)
 
+  /api/catalog/search:
+    post:
+      tags:
+        - Catalog
+      summary: Search books by title, author, subject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Dune"
+                author:
+                  type: string
+                  example: "Frank Herbert"
+                subject:
+                  type: string
+                  example: "Science Fiction"
+                page:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rows:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        book_id:
+                          type: string
+                        book:
+                          type: string
+                        authors:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              author_id:
+                                type: string
+                              name:
+                                type: string
+                  total:
+                    type: integer
+
+  /api/catalog/books/{bookId}:
+    get:
+      tags:
+        - Catalog
+      summary: Get book details by ID
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book info including authors, covers, subjects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  book:
+                    type: object
+                    properties:
+                      book_id:
+                        type: string
+                      title:
+                        type: string
+                      first_published:
+                        type: string
+                      description:
+                        type: string
+                      cover_ids:
+                        type: array
+                        items:
+                          type: string
+                      author_ids:
+                        type: array
+                        items:
+                          type: string
+                      subject_ids:
+                        type: array
+                        items:
+                          type: string
+                  covers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        cover_id:
+                          type: string
+                        filepath:
+                          type: string
+                  subjects:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        subject_id:
+                          type: string
+                        topic:
+                          type: string
+                  authors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        author_id:
+                          type: string
+                        name:
+                          type: string
+                        birth_date:
+                          type: string
+                        bio:
+                          type: string
+                        wikipedia:
+                          type: string
+
+  /api/catalog/authors/{bookId}:
+    get:
+      tags:
+        - Catalog
+      summary: Get all authors for a book
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of authors for the book
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        author_id:
+                          type: string
+                        name:
+                          type: string
+                        birth_date:
+                          type: string
+                        bio:
+                          type: string
+                        wikipedia:
+                          type: string
+
 tags:
   - name: Auth
   - name: Catalog
