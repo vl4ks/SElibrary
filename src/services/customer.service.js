@@ -14,3 +14,5 @@ class ManageCustomerService {
         // customerRepository.update()
     }
 }
+
+module.exports = new ManageCustomerService()

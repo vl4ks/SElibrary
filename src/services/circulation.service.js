@@ -26,3 +26,5 @@ class CirculationService {
         // historyRepository.create() ?
     }
 }
+
+module.exports = new CirculationService()
