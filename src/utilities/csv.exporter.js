@@ -11,11 +11,14 @@ class CSVExporter {
             throw new Error('No data to export')
         }
 
-        const headers = ['Customer ID', 'Issue Date', 'Return Date']
+        const headers = ['Book ID', 'Title', 'Customer ID', 'Date of issue', 'Return Date', 'Was overdue']
         const rows = data.rows.map(row => [
+            row.book_id,
+            row.title,
             row.customer_id,
             row.issue_date,
-            row.return_date
+            row.return_date,
+            row.status
         ])
 
         const csvContent = [headers, ...rows]
