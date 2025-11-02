@@ -40,7 +40,7 @@ class CustomerRepository {
 
     async update(customer) {
         await db.query(`
-            UPDATE requests 
+            UPDATE customers
             SET name = $1, address=$2, postalcode = $3, city = $4, phone = $5, email = $6
             WHERE customer_id = $7`,
             [customer.name, customer.address, customer.postalcode, customer.city, customer.phone, customer.email, customer.customer_id]
