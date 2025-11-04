@@ -14,8 +14,8 @@ class ReportController {
     async getBookHistory(req, res, next) {
         try {
             const { bookId, bookTitle } = req.body
-            const { rows, book} = await reportService.search(bookId, bookTitle)
-            return res.json({ rows, book})
+            const { rows, book } = await reportService.search(bookId, bookTitle)
+            return res.json({ rows, book })
         } catch (error) {
             return next(error)
         }

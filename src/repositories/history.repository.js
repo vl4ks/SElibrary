@@ -29,12 +29,12 @@ class HistoryRepository {
             conditions.push(`books.title ILIKE $${params.length}`);
         }
 
-        const result = await db.query(`         
+        const result = await db.query(`
             SELECT * FROM history
             JOIN books ON history.book_id = books.book_id
             ${conditions.length > 0 ? `WHERE ` + conditions.join(` AND `) : ``}
             ORDER BY history.history_id`,
-            [`%${book_title}%`]
+            params
         )
 
         const rows = result.rows
@@ -57,7 +57,7 @@ class HistoryRepository {
     async create(history) {
         const result = await db.query(`
             INSERT INTO history (book_id, customer_id, issue_date, return_date, status, issued_by, received_by)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING history_id`,
             [history.book_id, history.customer_id, history.issue_date, history.return_date, history.status, history.issued_by, history.received_by]
         )

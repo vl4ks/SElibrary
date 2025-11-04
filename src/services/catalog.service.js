@@ -4,7 +4,7 @@ const coverRepository = require("../repositories/cover.repository")
 const subjectRepository = require("../repositories/subject.repository")
 
 class CatalogService {
-    async search(title, author, subject, page = 1) { // call on start without parameters in controller
+    async search(title, author, subject, page = 1) {
         const limit = 50
         const offset = (page - 1) * limit;
         const { books, total } = await bookRepository.findByParameters(title, author, subject, limit, offset)
