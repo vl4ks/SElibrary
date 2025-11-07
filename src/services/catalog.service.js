@@ -2,6 +2,7 @@ const bookRepository = require("../repositories/book.repository")
 const authorRepository = require("../repositories/author.repository")
 const coverRepository = require("../repositories/cover.repository")
 const subjectRepository = require("../repositories/subject.repository")
+const { NotFoundError } = require("../errors")
 
 class CatalogService {
     async search(title, author, subject, page = 1) {
@@ -25,6 +26,10 @@ class CatalogService {
 
     async getBookInfo(id) {
         const book = await bookRepository.findById(id)
+
+        if (!book) 
+            throw new NotFoundError('Book not found')
+
         const covers = await Promise.all(book.cover_ids.map(id => coverRepository.findById(id)))
         const subjects = await Promise.all(book.subject_ids.map(id => subjectRepository.findById(id)))
         const authors = await Promise.all(book.author_ids.map(id => authorRepository.findById(id)))
@@ -33,6 +38,10 @@ class CatalogService {
 
     async getAuthorsByBook(bookId) {
         const book = await bookRepository.findById(bookId)
+
+        if (!book) 
+            throw new NotFoundError('Book not found')
+        
         return await Promise.all(book.author_ids.map(id => authorRepository.findById(id)))
     }
 }

@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (result.redirect) {
             window.location.href = result.redirect
-        } else {
-            alert('Неверное имя пользователя или пароль.')
+        } else if (result.error) {
+            alert(result.error)
         }
     })
 })
+

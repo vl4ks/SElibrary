@@ -6,11 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchReminders() {
         const res = await fetch('/api/report/reminders')
 
-        if (!res.ok) {
-            alert('Failed to fetch reminders')
-            return
-        }
-
         const data = await res.json()
 
         renderReminders(data)

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         if (!res.ok) {
-            alert('Export failed')
+            alert(res.error || 'Export failed')
             return
         }
 

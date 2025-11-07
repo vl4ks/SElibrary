@@ -23,11 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({ bookId, bookTitle: bookTitleValue })
         })
 
-        if (!res.ok) {
-            alert('Search failed')
-            return
-        }
-
         const data = await res.json()
 
         renderBookHistory(data)

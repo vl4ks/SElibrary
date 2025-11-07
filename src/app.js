@@ -84,7 +84,9 @@ function createApp() {
     app.use((err, req, res, next) => {
         console.error(err)
         if (req.path.startsWith('/api')) {
-            return res.status(500).json({ error: 'internal_server_error' })
+            const statusCode = err.statusCode || 500
+            const message = err.message || 'internal_server_error'
+            return res.status(statusCode).json({ error: message })
         }
         next(err)
     })

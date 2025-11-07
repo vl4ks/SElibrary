@@ -1,15 +1,18 @@
 const fs = require('fs')
 const path = require('path')
+const { BadRequestError } = require('../errors')
 
 class CSVExporter {
     static exportBookHistory(data, filename) {
+        if (!data || typeof data !== 'object')
+            throw new BadRequestError('Invalid data provided')
+
         if (!filename) {
             const bookTitle = data.book ? data.book.title.replace(/[^a-zA-Z0-9]/g, '_') : 'book'
             filename = `${bookTitle}_history.csv`
         }
-        if (!data.rows || data.rows.length === 0) {
-            throw new Error('No data to export')
-        }
+        if (!data.rows || data.rows.length === 0)
+            throw new BadRequestError('No data to export')
 
         const headers = ['Book ID', 'Title', 'Customer ID', 'Date of issue', 'Return Date', 'Was overdue']
         const rows = data.rows.map(row => [
@@ -22,12 +25,16 @@ class CSVExporter {
         ])
 
         const csvContent = [headers, ...rows]
-            .map(row => row.map(field => `"${field}"`).join(','))
+            .map(row => row.map(field => `"${field || ''}"`).join(','))
             .join('\n')
 
         const filePath = path.join(__dirname, '../../exports', filename)
-        fs.mkdirSync(path.dirname(filePath), { recursive: true })
-        fs.writeFileSync(filePath, csvContent, 'utf8')
+        try {
+            fs.mkdirSync(path.dirname(filePath), { recursive: true })
+            fs.writeFileSync(filePath, csvContent, 'utf8')
+        } catch (error) {
+            throw new Error(`Failed to write CSV file: ${error.message}`)
+        }
 
         return filePath
     }

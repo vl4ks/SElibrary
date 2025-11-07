@@ -79,11 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
             tableBody.appendChild(row)
 
             row.addEventListener('click', async () => {
-                const res = await fetch(`/api/catalog/books/${b.book_id}`);
-                const { book, covers, subjects, authors } = await res.json();
+                const res = await fetch(`/api/catalog/books/${b.book_id}`)
+                const result = await res.json()
 
-                window.renderBook(book, covers, subjects, authors);
-            });
+                if (result.error) {
+                    alert(result.error)
+                    return
+                }
+
+                window.renderBook(result.book, result.covers, result.subjects, result.authors)
+            })
         })
     }
 

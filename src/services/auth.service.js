@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const adminRepository = require('../repositories/admin.repository')
+const { NotFoundError } = require('../errors')
 
 class AuthService {
     async tryLogin(login, password) {
@@ -10,18 +11,22 @@ class AuthService {
         }
 
         if (login !== testUser.username)
-            return false
+            throw new NotFoundError('Invalid username or password')
 
-        return await bcrypt.compare(password, testUser.passwordHash)
+        const isValidPassword = await bcrypt.compare(password, testUser.passwordHash)
+        if (!isValidPassword)
+            throw new NotFoundError('Invalid username or password')
     }
 
     // async tryLogin(login, password) {
-    //   const admin = await adminRepository.findByLogin(login)
-    //
-    //   if (!admin)
-    //       return false
-    //
-    //   return await bcrypt.compare(password, admin.password)
+    //     const admin = await adminRepository.findByLogin(login)
+
+    //     if (!admin)
+    //         throw new NotFoundError('Invalid username or password')
+
+    //     const isValidPassword = await bcrypt.compare(password, testUser.passwordHash)
+    //     if (!isValidPassword)
+    //         throw new NotFoundError('Invalid username or password')
     // }
 }
 
