@@ -5,7 +5,7 @@ class BookCoverRepository {
     async findById(id) {
         const result = await db.query(`
             SELECT * FROM book_covers
-            WHERE id = $1`,
+            WHERE cover_id = $1`,
             [id]
         );
 

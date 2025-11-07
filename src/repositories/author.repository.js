@@ -4,8 +4,8 @@ const Author = require("../models/author")
 class AuthorRepository {
     async findById(id) {
         const result = await db.query(`
-            SELECT * FROM authors 
-            WHERE id = $1`,
+            SELECT * FROM authors
+            WHERE author_id = $1`,
             [id]
         )
 
