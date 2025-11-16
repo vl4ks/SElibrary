@@ -5,31 +5,33 @@
     body: `
         <main class="window">
             <section class="search">
-                    <form method="" action="">
+                <form id="searchForm">
                     <div>
                         <label for="id">Customer ID</label>
                         <input id="id" type="text">
                     </div>
+
                     <div>
                         <label for="name">Name</label>
                         <input id="name" type="text">
                     </div>
-                    <div>
-                        <div></div>
-                        <div class="buttons">
-                            <button>Search</button>
-                        </div>
+
+                    <div></div>
+
+                    <div class="buttons">
+                        <button type="submit">Search</button>
                     </div>
                 </form>
+
                 <div class="buttons manage">
-                    <button onClick=""><a href="/addeditcustomer">Edit...</a></button>
-                    <button onClick=""><a href="/addeditcustomer">Add...</a></button>
+                    <button id="editBtn" disabled>Edit...</button>
+                    <button id="addBtn">Add...</button>
                 </div>
             </section>
 
             <section class="results">
                 <div class="table-wrapper">
-                    <table>
+                    <table id="customersTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -39,172 +41,12 @@
                                 <th>City</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                            <tr>
-                                <td>$ID$</td>
-                                <td>$Name$</td>
-                                <td>$Address$</td>
-                                <td>$Zip$</td>
-                                <td>$City$</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </section>
         </main>
+
+        <script src="/js/customers.js"></script>
     `
 }) %>

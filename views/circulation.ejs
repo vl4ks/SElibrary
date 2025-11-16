@@ -9,7 +9,7 @@
                     <div class="logo">
                         <img src="../img/logo.png" alt="logo">
                     </div>
-                        <form method="" action="">
+                    <form>
                         <div>
                             <label for="customerid">Customer ID</label>
                             <input id="customerid" type="text">
@@ -23,12 +23,11 @@
                     </form>
                 </div>
                 <div class="customer">
-                    <h1>$CustomerName$<br>($CustomerID$)</h1>
-                    <p>$Zip$ $Sity$</p>
+                    <h1>-<br>(-)</h1>
+                    <p>- -</p>
                     <div class="buttons">
-                        <button onClick="">Edit...</button>
+                        <button disabled>Edit...</button>
                     </div>
-
                 </div>
             </section>
 
@@ -39,16 +38,16 @@
                         <form>
                             <div>
                                 <label for="bookid">Book ID</label>
-                                <input id="bookid" disabled>
+                                <input id="bookid" type="text">
                             </div>
                             <div>
                                 <div></div>
-                                <p>Title: $Title$</p>
+                                <p>Title: -</p>
                             </div>
                         </form>
                         <div class="buttons">
-                            <button onClick="">Issue</button>
-                            <button onClick="">Return</button>
+                            <button type="button">Issue</button>
+                            <button type="button">Return</button>
                         </div>
                     </div>
                 </div>
@@ -67,30 +66,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr>
-                                    <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
+                                        <td colspan="3">Нет записей</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -99,10 +75,11 @@
                     <div class="bookmanage renew">
                         <div></div>
                         <div class="buttons">
-                            <button onClick="">Renew</button>
+                            <button type="button">Renew</button>
                         </div>
                     </div>
                 </div>
+
                 <div>
                     <h1>History</h1>
                     <section class="results history">
@@ -117,30 +94,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr>
-                                    <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
-                                    </tr> <tr>
-                                        <td>$Title$</td>
-                                        <td>$DateOfIssue$</td>
-                                        <td>$ReturnUntil$</td>
+                                        <td colspan="3">Нет записей</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -149,5 +103,7 @@
                 </div>
             </section>
         </main>
+
+        <script src="/js/circulation.js"></script>
     `
 }) %>
