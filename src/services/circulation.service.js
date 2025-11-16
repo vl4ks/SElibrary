@@ -1,5 +1,6 @@
 const historyRepository = require("../repositories/history.repository")
 const History = require("../models/history")
+const { BadRequestError } = require("../errors")
 
 class CirculationService {
     async circulation(customerId) {
@@ -13,6 +14,12 @@ class CirculationService {
     }
 
     async issue(bookId, customerId) {
+        const maxBooksPerCustomer = 5
+        const issuedRecords = await historyRepository.findByCustomerId(customerId)
+        const countOfIssue = issuedRecords.filter(r => r.status === "issued").length
+        if (countOfIssue === maxBooksPerCustomer)
+            return new BadRequestError(`Max limit of issued books (${maxBooksPerCustomer}) reached`)
+
         const issueDate = new Date()
         const returnDate = new Date()
         returnDate.setDate(returnDate.getDate() + 14) // например, 14 дней на возврат
