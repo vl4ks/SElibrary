@@ -54,6 +54,16 @@ class HistoryRepository {
         return list
     }
 
+    async update(history) {
+        const result = await db.query(`
+            UPDATE history
+            SET return_date = $1, status = $2, received_by = $3
+            WHERE history_id = $4`,
+            [history.return_date, history.status, history.received_by, history.history_id]
+        )
+        return result.rows[0].history_id
+    }
+
     async create(history) {
         const result = await db.query(`
             INSERT INTO history (book_id, customer_id, issue_date, return_date, status, issued_by, received_by)
