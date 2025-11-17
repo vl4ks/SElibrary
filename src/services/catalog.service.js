@@ -12,9 +12,9 @@ class CatalogService {
 
         const result = await Promise.all(
             books.map(async b => ({
-                book_id: b.book_id,
+                bookID: b.bookID,
                 book: b.title,
-                authors: await Promise.all(b.author_ids.map(id => authorRepository.findById(id)))
+                authors: await Promise.all(b.authorIDs.map(id => authorRepository.findById(id)))
             }))
         )
 
@@ -30,9 +30,9 @@ class CatalogService {
         if (!book) 
             throw new NotFoundError('Book not found')
 
-        const covers = await Promise.all(book.cover_ids.map(id => coverRepository.findById(id)))
-        const subjects = await Promise.all(book.subject_ids.map(id => subjectRepository.findById(id)))
-        const authors = await Promise.all(book.author_ids.map(id => authorRepository.findById(id)))
+        const covers = await Promise.all(book.coverIDs.map(id => coverRepository.findById(id)))
+        const subjects = await Promise.all(book.subjectIDs.map(id => subjectRepository.findById(id)))
+        const authors = await Promise.all(book.authorIDs.map(id => authorRepository.findById(id)))
         return { book, covers, subjects, authors }
     }
 
@@ -42,7 +42,7 @@ class CatalogService {
         if (!book) 
             throw new NotFoundError('Book not found')
         
-        return await Promise.all(book.author_ids.map(id => authorRepository.findById(id)))
+        return await Promise.all(book.authorIDs.map(id => authorRepository.findById(id)))
     }
 }
 

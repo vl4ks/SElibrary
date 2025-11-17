@@ -1,12 +1,12 @@
 class Book {
-    constructor(book_id, title, first_published, description, author_ids, subject_ids, cover_ids) {
-        this.book_id = book_id;
+    constructor(bookID, title, publishedDate, description, authorIDs, subjectIDs, coverIDs) {
+        this.bookID = bookID;
         this.title = title;
-        this.first_published = first_published;
+        this.publishedDate = publishedDate;
         this.description = description;
-        this.author_ids = author_ids;
-        this.subject_ids = subject_ids;
-        this.cover_ids = cover_ids;
+        this.authorIDs = authorIDs;
+        this.subjectIDs = subjectIDs;
+        this.coverIDs = coverIDs;
     }
 }
 

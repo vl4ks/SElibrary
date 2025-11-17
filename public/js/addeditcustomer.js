@@ -21,11 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
                 const customer = customers[0];
-                customerIdInput.value = customer.customer_id;
-                idInput.value = customer.customer_id;
+                customerIdInput.value = customer.customerID;
+                idInput.value = customer.customerID;
                 nameInput.value = customer.name;
                 addressInput.value = customer.address;
-                postalcodeInput.value = customer.postalcode;
+                postalcodeInput.value = customer.postalCode;
                 cityInput.value = customer.city;
                 phoneInput.value = customer.phone;
                 emailInput.value = customer.email;

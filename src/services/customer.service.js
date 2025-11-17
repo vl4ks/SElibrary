@@ -12,7 +12,7 @@ class ManageCustomerService {
             null,
             customerData.name,
             customerData.address,
-            customerData.postalcode,
+            customerData.postalCode,
             customerData.city,
             customerData.phone,
             customerData.email
@@ -24,10 +24,10 @@ class ManageCustomerService {
 
     async edit(customerData) {
         const customer = new Customer(
-            customerData.customer_id,
+            customerData.customerID,
             customerData.name,
             customerData.address,
-            customerData.postalcode,
+            customerData.postalCode,
             customerData.city,
             customerData.phone,
             customerData.email

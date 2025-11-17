@@ -82,11 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const row = document.createElement("tr");
 
             const titleCell = document.createElement("td");
-            titleCell.textContent = rec.title || rec.book_id;
+            titleCell.textContent = rec.title || rec.bookID;
             const issueCell = document.createElement("td");
-            issueCell.textContent = rec.issue_date ? new Date(rec.issue_date).toLocaleDateString() : "";
+            issueCell.textContent = rec.issueDate ? new Date(rec.issueDate).toLocaleDateString() : "";
             const returnCell = document.createElement("td");
-            returnCell.textContent = rec.return_date ? new Date(rec.return_date).toLocaleDateString() : "";
+            returnCell.textContent = rec.returnDate ? new Date(rec.returnDate).toLocaleDateString() : "";
 
             row.appendChild(titleCell);
             row.appendChild(issueCell);
@@ -97,10 +97,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function populateCustomerInfo(customer) {
         customerSection.innerHTML = `
-            <h1>${customer.name || "-"}<br>(${customer.customer_id || "-"})</h1>
-            <p>${customer.postalcode || "-"} ${customer.city || "-"}</p>
+            <h1>${customer.name || "-"}<br>(${customer.customerID || "-"})</h1>
+            <p>${customer.postalCode || "-"} ${customer.city || "-"}</p>
             <div class="buttons">
-                <button onclick="window.location.href='/addeditcustomer?id=${customer.customer_id}'">Edit...</button>
+                <button onclick="window.location.href='/addeditcustomer?id=${customer.customerID}'">Edit...</button>
             </div>
         `;
     }

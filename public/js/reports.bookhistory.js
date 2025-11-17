@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
         data.rows.forEach(row => {
             const tr = document.createElement('tr')
             tr.innerHTML = `
-                <td>${row.customer_id}</td>
-                <td>${row.issue_date}</td>
-                <td>${row.return_date}</td>
+                <td>${row.customerID}</td>
+                <td>${row.issueDate}</td>
+                <td>${row.returnDate}</td>
             `
             bookHistoryResults.appendChild(tr)
         })

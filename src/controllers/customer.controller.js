@@ -33,7 +33,7 @@ class CustomerController {
 
             res.json({
                 message: "Customer created successfully",
-                customer_id: newCustomerId
+                customerID: newCustomerId
             });
 
         } catch (err) {
@@ -45,7 +45,7 @@ class CustomerController {
         try {
             const data = req.body;
 
-            if (!data.customer_id)
+            if (!data.customerID)
                 throw new BadRequestError("customer_id is required");
 
             if (!data.name)

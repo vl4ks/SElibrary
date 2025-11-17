@@ -1,9 +1,10 @@
 class Author {
-    constructor(author_id, name, birth_date, death_date, wikipedia) {
-        this.author_id = author_id;
+    constructor(authorID, name, birthDate, deathDate, bio, wikipedia) {
+        this.authorID = authorID;
         this.name = name;
-        this.birth_date = birth_date;
-        this.death_date = death_date;
+        this.bio = bio;
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;
         this.wikipedia = wikipedia;
     }
 }

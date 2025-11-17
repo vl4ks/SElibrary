@@ -25,13 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         customers.forEach(c => {
             const tr = document.createElement("tr");
-            tr.dataset.id = c.customer_id;
+            tr.dataset.id = c.customerID;
 
             tr.innerHTML = `
-                <td>${c.customer_id}</td>
+                <td>${c.customerID}</td>
                 <td>${c.name}</td>
                 <td>${c.address || ""}</td>
-                <td>${c.postalcode || ""}</td>
+                <td>${c.postalCode || ""}</td>
                 <td>${c.city || ""}</td>
             `;
 

@@ -12,21 +12,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     authors = await response.json()
 
     const storedAuthorId = localStorage.getItem('selectedAuthorId');
-    const selectedAuthor = authors.find(a => a.author_id === storedAuthorId) || authors[0];
+    const selectedAuthor = authors.find(a => a.authorID === storedAuthorId) || authors[0];
 
     if (selectedAuthor) {
-        authorSelect.value = selectedAuthor.author_id
+        authorSelect.value = selectedAuthor.authorID
         renderAuthor(selectedAuthor)
     }
 
     authorSelect.addEventListener('change', () => {
-        const selected = authors.find(a => a.author_id === authorSelect.value)
+        const selected = authors.find(a => a.authorID === authorSelect.value)
         if (selected) renderAuthor(selected)
     })
 
     function renderAuthor(author) {
-        birthdayElement.textContent = author.birth_date
-            ? `${author.birth_date}`
+        birthdayElement.textContent = author.birthDate
+            ? `${author.birthDate}`
             : 'Birthday unknown'
 
         bioElement.textContent = author.bio || 'No biography available'

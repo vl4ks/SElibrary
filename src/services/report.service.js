@@ -5,7 +5,7 @@ class ReportService {
     async getReminders() {
         const rows = await historyRepository.findByOverdue(true)
         return await Promise.all(rows.map(async row => {
-            const book = await bookRepository.findById(row.book_id)
+            const book = await bookRepository.findById(row.bookID)
             return { ...row, title: book.title }
         }))
     }

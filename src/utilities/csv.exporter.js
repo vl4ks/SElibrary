@@ -16,11 +16,11 @@ class CSVExporter {
 
         const headers = ['Book ID', 'Title', 'Customer ID', 'Date of issue', 'Return Date', 'Was overdue']
         const rows = data.rows.map(row => [
-            row.book_id,
+            row.bookID,
             row.title,
-            row.customer_id,
-            row.issue_date,
-            row.return_date,
+            row.customerID,
+            row.issueDate,
+            row.returnDate,
             row.status
         ])
 

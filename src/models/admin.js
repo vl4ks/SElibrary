@@ -1,6 +1,5 @@
 class Admin {
-    constructor(user_id, login, password) {
-        this.user_id = user_id;
+    constructor(userID, login, password) {
         this.login = login;
         this.password = password;
     }

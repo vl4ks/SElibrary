@@ -1,6 +1,6 @@
 class BookSubject {
-    constructor(subject_id, topic) {
-        this.subject_id = subject_id;
+    constructor(subjectID, topic) {
+        this.subjectID = subjectID;
         this.topic = topic;
     }
 }

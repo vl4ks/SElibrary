@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (authorsData.length > 0) {
             authorsContainer.innerHTML = authorsData.map(a =>
-                `<a class="author-link" data-book-id="${book.book_id}" data-author-id="${a.author_id}">${a.name}</a>`
+                `<a class="author-link" data-book-id="${book.bookID}" data-author-id="${a.authorID}">${a.name}</a>`
             ).join(', ')
         } else {
             authorsContainer.innerHTML = `<span>No authors</span>`
         }
 
-        yearElement.textContent = `first published: ${book.first_published || 'unknown'}`
+        yearElement.textContent = `first published: ${book.publishedDate || 'unknown'}`
         descElement.textContent = book.description || 'No description available'
         subjectsElement.textContent = subjectsData.length
             ? subjectsData.map(s => s.topic).join(', ')
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateCover() {
         if (covers.length > 0) {
-            coverImage.src = covers[currentCoverIndex].filepath
+            coverImage.src = covers[currentCoverIndex].filePath
         } else {
             coverImage.src = '../img/defaultbookpreview.png'
         }

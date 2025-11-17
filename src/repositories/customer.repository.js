@@ -24,16 +24,16 @@ class CustomerRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new Customer(row.customer_id, row.name, row.address, row.postalcode, row.city, row.phone, row.email))
+        const list = rows.map(row => new Customer(row.customer_id, row.name, row.address, row.postal_code, row.city, row.phone, row.email))
         return list
     }
 
     async create(customer) {
         const result = await db.query(`
-            INSERT INTO customers (name, address, postalcode, city, phone, email) 
+            INSERT INTO customers (name, address, postal_code, city, phone, email) 
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING customer_id`,
-            [customer.name, customer.address, customer.postalcode, customer.city, customer.phone, customer.email]
+            [customer.name, customer.address, customer.postal_code, customer.city, customer.phone, customer.email]
         )
         return result.rows[0].customer_id
     }
@@ -41,9 +41,9 @@ class CustomerRepository {
     async update(customer) {
         await db.query(`
             UPDATE customers
-            SET name = $1, address=$2, postalcode = $3, city = $4, phone = $5, email = $6
+            SET name = $1, address=$2, postal_code = $3, city = $4, phone = $5, email = $6
             WHERE customer_id = $7`,
-            [customer.name, customer.address, customer.postalcode, customer.city, customer.phone, customer.email, customer.customer_id]
+            [customer.name, customer.address, customer.postal_code, customer.city, customer.phone, customer.email, customer.customer_id]
         )
     }
 }

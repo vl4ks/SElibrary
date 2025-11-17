@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = document.createElement('tr')
             row.innerHTML = `
                 <td>${reminder.title}</td>
-                <td>${reminder.customer_id}</td>
-                <td>${reminder.issue_date}</td>
-                <td>${reminder.return_date}</td>
+                <td>${reminder.customerID}</td>
+                <td>${reminder.issueDate}</td>
+                <td>${reminder.returnDate}</td>
             `
             remindersTableBody.appendChild(row)
         })

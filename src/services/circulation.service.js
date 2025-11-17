@@ -40,16 +40,16 @@ class CirculationService {
 
     async return(bookId, customerId) {
         const allRecords = await historyRepository.findByCustomerId(customerId)
-        const activeRecord = allRecords.find(r => r.book_id === bookId && r.status === "issued")
+        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued")
 
         const newHistory = new History(
             null,
             bookId,
             customerId,
-            activeRecord.issue_date,
+            activeRecord.issueDate,
             new Date(),
             "returned",
-            activeRecord.issued_by,
+            activeRecord.issuedBy,
             "librarian" // кто принял возврат
         )
 
@@ -58,20 +58,20 @@ class CirculationService {
 
     async renew(bookId, customerId) {
         const allRecords = await historyRepository.findByCustomerId(customerId)
-        const activeRecord = allRecords.find(r => r.book_id === bookId && r.status === "issued")
+        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued")
 
 
-        const extendedReturnDate = new Date(activeRecord.return_date)
+        const extendedReturnDate = new Date(activeRecord.returnDate)
         extendedReturnDate.setDate(extendedReturnDate.getDate() + 7) // продление на неделю, можно доработать если передавать параметр
 
         const newHistory = new History(
             null,
             bookId,
             customerId,
-            activeRecord.issue_date,
+            activeRecord.issueDate,
             extendedReturnDate,
             "renewed",
-            activeRecord.issued_by,
+            activeRecord.issuedBy,
             null
         )
 

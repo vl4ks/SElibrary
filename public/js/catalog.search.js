@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tableBody.appendChild(row)
 
             row.addEventListener('click', async () => {
-                const res = await fetch(`/api/catalog/books/${b.book_id}`)
+                const res = await fetch(`/api/catalog/books/${b.bookID}`)
                 const result = await res.json()
 
                 if (result.error) {
