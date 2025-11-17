@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!customerId) return alert("Введите Customer ID");
 
         try {
-            const response = await fetch(`/circulation/customer/${customerId}`);
+            const response = await fetch(`/api/circulation/customer/${customerId}`);
             if (!response.ok) throw new Error("Клиент не найден");
 
             const data = await response.json();
@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 let url = "";
                 switch(action) {
-                    case "issue": url = "/circulation/issue"; break;
-                    case "return": url = "/circulation/return"; break;
-                    case "renew": url = "/circulation/renew"; break;
+                    case "issue": url = "/api/circulation/issue"; break;
+                    case "return": url = "/api/circulation/return"; break;
+                    case "renew": url = "/api/circulation/renew"; break;
                     default: return;
                 }
 
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 alert(result.message);
 
-                const updated = await fetch(`/circulation/customer/${currentCustomerId}`);
+                const updated = await fetch(`/api/circulation/customer/${currentCustomerId}`);
                 const updatedData = await updated.json();
                 populateTable(currentIssuesTableBody, updatedData.currentIssues);
                 populateTable(historyTableBody, updatedData.history);
