@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             authorsContainer.innerHTML = `<span>No authors</span>`
         }
 
-        yearElement.textContent = `first published: ${book.publishedDate || 'unknown'}`
+        yearElement.textContent = `first published: ${book.firstPublished || 'unknown'}`
         descElement.textContent = book.description || 'No description available'
         subjectsElement.textContent = subjectsData.length
             ? subjectsData.map(s => s.topic).join(', ')

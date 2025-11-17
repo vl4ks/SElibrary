@@ -1,8 +1,8 @@
 class Book {
-    constructor(bookID, title, publishedDate, description, authorIDs, subjectIDs, coverIDs) {
+    constructor(bookID, title, firstPublished, description, authorIDs, subjectIDs, coverIDs) {
         this.bookID = bookID;
         this.title = title;
-        this.publishedDate = publishedDate;
+        this.firstPublished = firstPublished;
         this.description = description;
         this.authorIDs = authorIDs;
         this.subjectIDs = subjectIDs;
