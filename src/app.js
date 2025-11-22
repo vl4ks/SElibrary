@@ -1,10 +1,7 @@
-require('dotenv').config()
-
 const express = require('express')
 const path = require('path')
 const session = require('express-session')
-const PgSession = require('connect-pg-simple')(session)
-const dbPool = require('../db')
+
 
 function createApp() {
     const app = express()
@@ -16,7 +13,6 @@ function createApp() {
     app.set('views', path.join(__dirname, '..', 'views'))
 
     app.use(session({
-        //store: new PgSession({ pool: dbPool }),
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
