@@ -11,7 +11,7 @@ class AuthorRepository {
 
         const row = result.rows[0]
         if (row) {
-            const author = new Author(row.author_id, row.name, row.birth_date, row.death_date, row.wikipedia)
+            const author = new Author(row.author_id, row.name, row.birth_date, row.death_date, row.bio, row.wikipedia)
             return author
         }
         

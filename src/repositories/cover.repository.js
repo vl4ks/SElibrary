@@ -11,7 +11,7 @@ class BookCoverRepository {
 
         const row = result.rows[0]
         if (row) {
-            const bookCover = new BookCover(row.cover_id, row.filepath)
+            const bookCover = new BookCover(row.cover_id, row.file_path)
             return bookCover
         }
         

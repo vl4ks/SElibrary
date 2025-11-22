@@ -4,10 +4,9 @@ const Book = require("../models/book")
 class BookRepository {
     async findById(id) {
         const result = await db.query(`
-            SELECT books.*, ARRAY_AGG(DISTINCT book_authors_rel.author_id) AS author_ids, ARRAY_AGG(DISTINCT book_subjects_rel.subject_id) AS subject_ids, ARRAY_AGG(DISTINCT book_covers_rel.cover_id) AS cover_ids FROM books
+            SELECT books.*, ARRAY_AGG(DISTINCT book_authors_rel.author_id) AS author_ids, ARRAY_AGG(DISTINCT book_subjects_rel.subject_id) AS subject_ids, ARRAY_AGG(DISTINCT books.cover_id) AS cover_ids FROM books
             LEFT JOIN book_authors_rel ON books.book_id = book_authors_rel.book_id
             LEFT JOIN book_subjects_rel ON books.book_id = book_subjects_rel.book_id
-            LEFT JOIN book_covers_rel ON books.book_id = book_covers_rel.book_id
             WHERE books.book_id = $1
             GROUP BY books.book_id`,
             [id]
@@ -38,7 +37,7 @@ class BookRepository {
 
         if (subject) {
             params.push(`%${subject}%`)
-            conditions.push(`book_subjects.topic ILIKE $${params.length}`)
+            conditions.push(`subjects.topic ILIKE $${params.length}`)
         }
 
         const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
@@ -56,11 +55,11 @@ class BookRepository {
             LEFT JOIN book_authors_rel ON books.book_id = book_authors_rel.book_id
             LEFT JOIN authors ON book_authors_rel.author_id = authors.author_id
             LEFT JOIN book_subjects_rel ON books.book_id = book_subjects_rel.book_id
-            LEFT JOIN book_subjects ON book_subjects_rel.subject_id = book_subjects.subject_id
+            LEFT JOIN subjects ON book_subjects_rel.subject_id = subjects.subject_id
             ${whereClause}
             GROUP BY books.book_id, books.title
             ORDER BY books.title
-            LIMIT $${params.length + 1} OFFSET $${params.length + 2};
+            LIMIT $${params.length - 1} OFFSET $${params.length};
         `
 
         const countQuery = `
@@ -69,12 +68,12 @@ class BookRepository {
             LEFT JOIN book_authors_rel ON books.book_id = book_authors_rel.book_id
             LEFT JOIN authors ON book_authors_rel.author_id = authors.author_id
             LEFT JOIN book_subjects_rel ON books.book_id = book_subjects_rel.book_id
-            LEFT JOIN book_subjects ON book_subjects_rel.subject_id = book_subjects.subject_id
+            LEFT JOIN subjects ON book_subjects_rel.subject_id = subjects.subject_id
             ${whereClause};
         `
 
-        const dataResult = await db.query(dataQuery, [...params, limit, offset])
-        const countResult = await db.query(countQuery, params)
+        const dataResult = await db.query(dataQuery, params)
+        const countResult = await db.query(countQuery, params.slice(0, -2))
 
         return {
             books: dataResult.rows.map(row => new Book(row.book_id, row.title, null, null, row.author_ids || [], null, null)),

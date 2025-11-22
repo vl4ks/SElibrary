@@ -4,7 +4,7 @@ const BookSubject = require("../models/booksubject")
 class SubjectRepository {
     async findById(id) {
         const result = await db.query(`
-            SELECT * FROM book_subjects 
+            SELECT * FROM subjects
             WHERE subject_id = $1`,
             [id]
         )
