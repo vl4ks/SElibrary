@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.querySelector('#bookTable tbody')
     const bookCountElement = document.getElementById('bookCount')
     const maxPagesElement = document.getElementById('maxPages')
-    const currentPageElement = document.querySelector('.status-bar input[type="text"]') // тот, что уже в статус-баре
+    const currentPageElement = document.querySelector('.status-bar input[type="text"]')
     const prevPageButton = document.getElementById('prevPage')
     const nextPageButton = document.getElementById('nextPage')
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         if (!res.ok) throw new Error('Request failed')
-        const { books, total } = await res.json()
+        const { rows: books, total } = await res.json()
 
         renderTable(books)
         updateStatus(total)

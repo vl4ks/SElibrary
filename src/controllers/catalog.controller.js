@@ -23,7 +23,7 @@ class CatalogController {
 
     async getAuthorsDetails(req, res, next) {
         try {
-            const { bookId } = req.body
+            const { bookId } = req.params
             const authors = await catalogService.getAuthorsByBook(bookId)
             return res.json({ authors })
         } catch (error) {
