@@ -68,6 +68,24 @@ class CustomerController {
             next(err);
         }
     }
+
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params;
+
+            if (!id) throw new BadRequestError("Customer ID is required");
+
+            const customer = await manageCustomerService.getById(id);
+
+            if (!customer)
+                throw new NotFoundError(`Customer with id ${id} not found`);
+
+            res.json(customer);
+
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = new CustomerController();

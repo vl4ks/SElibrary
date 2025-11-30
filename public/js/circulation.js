@@ -54,7 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.message || "Ошибка");
 
-                alert(result.message);
+                if (action === "return" && result.isOverdue) {
+                    alert(result.message + " ⚠️ Книга была просрочена!");
+                } else {
+                    alert(result.message);
+                }
 
                 const updated = await fetch(`/api/circulation/customer/${currentCustomerId}`);
                 const updatedData = await updated.json();
@@ -83,10 +87,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const titleCell = document.createElement("td");
             titleCell.textContent = rec.title || rec.bookID;
+
             const issueCell = document.createElement("td");
             issueCell.textContent = rec.issueDate ? new Date(rec.issueDate).toLocaleDateString() : "";
+
             const returnCell = document.createElement("td");
-            returnCell.textContent = rec.returnDate ? new Date(rec.returnDate).toLocaleDateString() : "";
+            const returnDate = rec.returnDate ? new Date(rec.returnDate).toLocaleDateString() : "";
+            returnCell.textContent = returnDate;
+
+            if (rec.overdue) {
+                returnCell.innerHTML += ' ⚠️';
+                returnCell.classList.add("overdue");
+            }
 
             row.appendChild(titleCell);
             row.appendChild(issueCell);

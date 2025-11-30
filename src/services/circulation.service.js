@@ -1,28 +1,38 @@
-const historyRepository = require("../repositories/history.repository")
-const History = require("../models/history")
-const { BadRequestError } = require("../errors")
+const historyRepository = require("../repositories/history.repository");
+const customerRepository = require("../repositories/customer.repository");
+const History = require("../models/history");
+const { BadRequestError, NotFoundError } = require("../errors");
 
 class CirculationService {
     async circulation(customerId) {
-        const allRecords = await historyRepository.findByCustomerId(customerId)
-        
-        const currentIssues = allRecords.filter(record => record.status === "issued")
+        const customer = await customerRepository.findById(customerId);
+        if (!customer) throw new NotFoundError(`Customer with ID ${customerId} not found`);
 
-        const history = allRecords.filter(record => record.status !== "issued")
+        const allRecords = await historyRepository.findByCustomerId(customerId);
+        const now = new Date();
 
-        return { currentIssues, history }
+        const currentIssues = allRecords
+            .filter(r => r.status === "issued")
+            .map(r => ({
+                ...r,
+                overdue: new Date(r.returnDate) < now
+            }));
+
+        const history = allRecords.filter(r => r.status !== "issued");
+
+        return { customer, currentIssues, history };
     }
 
     async issue(bookId, customerId) {
-        const maxBooksPerCustomer = 5
-        const issuedRecords = await historyRepository.findByCustomerId(customerId)
-        const countOfIssue = issuedRecords.filter(r => r.status === "issued").length
+        const maxBooksPerCustomer = 5;
+        const issuedRecords = await historyRepository.findByCustomerId(customerId);
+        const countOfIssue = issuedRecords.filter(r => r.status === "issued").length;
         if (countOfIssue === maxBooksPerCustomer)
-            return new BadRequestError(`Max limit of issued books (${maxBooksPerCustomer}) reached`)
+            throw new BadRequestError(`Max limit of issued books (${maxBooksPerCustomer}) reached`);
 
-        const issueDate = new Date()
-        const returnDate = new Date()
-        returnDate.setDate(returnDate.getDate() + 14) // например, 14 дней на возврат
+        const issueDate = new Date();
+        const returnDate = new Date();
+        returnDate.setDate(returnDate.getDate() + 21);
 
         const newHistory = new History(
             null,
@@ -31,38 +41,46 @@ class CirculationService {
             issueDate,
             returnDate,
             "issued",
-            "librarian", // кто выдал — можно позже заменить на ID пользователя, если доработать входные параметры то будет admin id
-            null         // еще не получено обратно
-        )
+            "librarian",
+            null
+        );
 
-        await historyRepository.create(newHistory)
+        await historyRepository.create(newHistory);
     }
 
     async return(bookId, customerId) {
-        const allRecords = await historyRepository.findByCustomerId(customerId)
-        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued")
+        const allRecords = await historyRepository.findByCustomerId(customerId);
+        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued");
+
+        if (!activeRecord) throw new BadRequestError("Active issued record not found");
+
+        const today = new Date();
+        const isOverdue = today > new Date(activeRecord.returnDate);
 
         const newHistory = new History(
             null,
             bookId,
             customerId,
             activeRecord.issueDate,
-            new Date(),
+            today,
             "returned",
             activeRecord.issuedBy,
-            "librarian" // кто принял возврат
-        )
+            "librarian"
+        );
 
-        await historyRepository.create(newHistory)
+        await historyRepository.create(newHistory);
+
+        return { isOverdue };
     }
 
     async renew(bookId, customerId) {
-        const allRecords = await historyRepository.findByCustomerId(customerId)
-        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued")
+        const allRecords = await historyRepository.findByCustomerId(customerId);
+        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued");
 
+        if (!activeRecord) throw new BadRequestError("Active issued record not found");
 
-        const extendedReturnDate = new Date(activeRecord.returnDate)
-        extendedReturnDate.setDate(extendedReturnDate.getDate() + 7) // продление на неделю, можно доработать если передавать параметр
+        const extendedReturnDate = new Date(activeRecord.returnDate);
+        extendedReturnDate.setDate(extendedReturnDate.getDate() + 7);
 
         const newHistory = new History(
             null,
@@ -73,10 +91,10 @@ class CirculationService {
             "renewed",
             activeRecord.issuedBy,
             null
-        )
+        );
 
-        await historyRepository.create(newHistory)
+        await historyRepository.create(newHistory);
     }
 }
 
-module.exports = new CirculationService()
+module.exports = new CirculationService();
