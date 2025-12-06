@@ -75,6 +75,14 @@ main {
             }
         }
 
+        a {
+            color: var(--color-light-green-1);
+            cursor: pointer;
+            &:hover {
+                color: var(--color-light-green-2);
+            }
+        }
+
         h2 {
             margin-bottom: 0;
 

@@ -1,0 +1,41 @@
+<%- include('layout', {
+    title: 'Collections',
+    stylesheet: 'collections.css',
+    user,
+    body: `
+        <main>
+            <section class="collections">
+                <div id="collections-list">
+                </div>
+            </section>
+
+            <section class="buttons">
+                <button id="add-collection-btn">Add collection</button>
+            </section>
+        </main>
+
+        <div id="collection-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="modal-title">New Collection</h2>
+
+                <div class="input-group">
+                    <label for="collection-name-input">Name</label>
+                    <input id="collection-name-input" type="text">
+                </div>
+
+                <h3>Books</h3>
+                <div id="books-list">
+                </div>
+
+                <button id="add-book-btn" class="secondary">+</button>
+                <br>
+                <div class="buttons">
+                    <button id="save-collection-btn" class="primary">Save</button>
+                    <button id="cancel-modal-btn" class="danger">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/collections.js"></script>
+    `
+}) %>

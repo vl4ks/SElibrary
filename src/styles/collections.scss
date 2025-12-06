@@ -1,0 +1,63 @@
+@import "./global.css";
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  width: 420px;
+  border: 1px solid black;
+}
+
+.input-group {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 2fr;
+  height: 30px;
+
+  input {
+    height: 26px;
+  }
+}
+
+#collection-name-input {
+  width: 100%;
+}
+
+#books-list {
+  .book-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+
+    input {
+      flex: 1;
+    }
+
+    button {
+      color: black;
+      cursor: pointer;
+      border: 1px solid black;
+    }
+  }
+}
+
+#add-book-btn {
+  width: 30px;
+}
+
+.buttons {
+  display: flex;
+  gap: 4px;
+}

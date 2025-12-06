@@ -6,7 +6,8 @@ const { NotFoundError } = require("../errors")
 
 class CatalogService {
     async search(title, author, subject, page = 1) {
-        const limit = 50
+        console.log('CatalogService.search called with', { title, author, subject, page })
+        const limit = 10
         const offset = (page - 1) * limit;
         const { books, total } = await bookRepository.findByParameters(title, author, subject, limit, offset)
 
@@ -18,31 +19,43 @@ class CatalogService {
             }))
         )
 
-        return {
+        const finalResult = {
             rows: result,
             total
         }
+        console.log('CatalogService.search returning', finalResult)
+        return finalResult
     }
 
     async getBookInfo(id) {
+        console.log('CatalogService.getBookInfo called with id:', id)
         const book = await bookRepository.findById(id)
 
-        if (!book) 
+        if (!book) {
+            console.log('CatalogService.getBookInfo throwing: Book not found')
             throw new NotFoundError('Book not found')
+        }
 
         const covers = await Promise.all(book.coverIDs.map(id => coverRepository.findById(id)))
         const subjects = await Promise.all(book.subjectIDs.map(id => subjectRepository.findById(id)))
         const authors = await Promise.all(book.authorIDs.map(id => authorRepository.findById(id)))
-        return { book, covers, subjects, authors }
+        const result = { book, covers, subjects, authors }
+        console.log('CatalogService.getBookInfo returning', result)
+        return result
     }
 
     async getAuthorsByBook(bookId) {
+        console.log('CatalogService.getAuthorsByBook called with bookId:', bookId)
         const book = await bookRepository.findById(bookId)
 
-        if (!book) 
+        if (!book) {
+            console.log('CatalogService.getAuthorsByBook throwing: Book not found')
             throw new NotFoundError('Book not found')
-        
-        return await Promise.all(book.authorIDs.map(id => authorRepository.findById(id)))
+        }
+
+        const result = await Promise.all(book.authorIDs.map(id => authorRepository.findById(id)))
+        console.log('CatalogService.getAuthorsByBook returning', result)
+        return result
     }
 }
 

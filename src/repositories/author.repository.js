@@ -1,5 +1,6 @@
 const db = require("../../db")
 const Author = require("../models/author")
+const { formatDate } = require("../utilities/date.utility")
 
 class AuthorRepository {
     async findById(id) {
@@ -11,7 +12,7 @@ class AuthorRepository {
 
         const row = result.rows[0]
         if (row) {
-            const author = new Author(row.author_id, row.name, row.birth_date, row.death_date, row.bio, row.wikipedia)
+            const author = new Author(row.author_id, row.name, formatDate(row.birth_date), formatDate(row.death_date), row.bio, row.wikipedia)
             return author
         }
         

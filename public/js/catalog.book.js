@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookSection = document.querySelector('.book')
     if (!bookSection) return
 
+    bookSection.style.display = 'none'
+
     const titleElement = document.getElementById('bookTitle')
     const authorsContainer = document.getElementById('bookAuthors')
     const yearElement = document.getElementById('bookYear')
@@ -15,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let covers = []
 
     window.renderBook = function (book, coversData = [], subjectsData = [], authorsData = []) {
+        bookSection.style.display = 'grid'
         titleElement.textContent = book.title || 'Untitled'
 
         if (authorsData.length > 0) {
@@ -25,11 +28,34 @@ document.addEventListener('DOMContentLoaded', () => {
             authorsContainer.innerHTML = `<span>No authors</span>`
         }
 
-        yearElement.textContent = `first published: ${book.firstPublished || 'unknown'}`
-        descElement.textContent = book.description || 'No description available'
-        subjectsElement.textContent = subjectsData.length
-            ? subjectsData.map(s => s.topic).join(', ')
-            : 'No subjects.'
+        const yearP = yearElement.parentElement
+        if (book.firstPublished) {
+            yearP.style.display = 'block'
+            const year = book.firstPublished.split('.')[2]
+            yearElement.textContent = year
+        } else {
+            yearP.style.display = 'none'
+        }
+
+        const descH2 = descElement.previousElementSibling
+        if (book.description) {
+            descH2.style.display = 'block'
+            descElement.style.display = 'block'
+            descElement.textContent = book.description
+        } else {
+            descH2.style.display = 'none'
+            descElement.style.display = 'none'
+        }
+
+        const subjectsH2 = subjectsElement.previousElementSibling
+        if (subjectsData.length > 0) {
+            subjectsH2.style.display = 'block'
+            subjectsElement.style.display = 'block'
+            subjectsElement.textContent = subjectsData.map(s => s.topic).join(', ')
+        } else {
+            subjectsH2.style.display = 'none'
+            subjectsElement.style.display = 'none'
+        }
 
         covers = coversData
         currentCoverIndex = 0
@@ -37,11 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateCover() {
-        if (covers.length > 0) {
-            coverImage.src = covers[currentCoverIndex].filePath
-        } else {
-            coverImage.src = '../img/defaultbookpreview.png'
-        }
+        const filePath = covers.length > 0 ? covers[currentCoverIndex].filePath : 'defaultbookpreview.png'
+        coverImage.src = '../img/covers/' + filePath
     }
 
     prevButton.addEventListener('click', () => {
@@ -62,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const bookId = e.target.dataset.bookId
             const authorId = e.target.dataset.authorId
 
-            window.open(`/catalog/authors/${bookId}`, '_blank')
+            window.location.href = `/catalog/authors/${bookId}`
 
             localStorage.setItem('selectedAuthorId', authorId)
         }

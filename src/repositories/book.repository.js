@@ -1,10 +1,11 @@
 const db = require("../../db")
 const Book = require("../models/book")
+const { formatDate } = require("../utilities/date.utility")
 
 class BookRepository {
     async findById(id) {
         const result = await db.query(`
-            SELECT books.*, ARRAY_AGG(DISTINCT book_authors_rel.author_id) AS author_ids, ARRAY_AGG(DISTINCT book_subjects_rel.subject_id) AS subject_ids, ARRAY_AGG(DISTINCT books.cover_id) AS cover_ids FROM books
+            SELECT books.*, COALESCE(ARRAY_AGG(DISTINCT book_authors_rel.author_id) FILTER (WHERE book_authors_rel.author_id IS NOT NULL), '{}') AS author_ids, COALESCE(ARRAY_AGG(DISTINCT book_subjects_rel.subject_id) FILTER (WHERE book_subjects_rel.subject_id IS NOT NULL), '{}') AS subject_ids, COALESCE(ARRAY_AGG(DISTINCT books.cover_id) FILTER (WHERE books.cover_id IS NOT NULL), '{}') AS cover_ids FROM books
             LEFT JOIN book_authors_rel ON books.book_id = book_authors_rel.book_id
             LEFT JOIN book_subjects_rel ON books.book_id = book_subjects_rel.book_id
             WHERE books.book_id = $1
@@ -14,7 +15,7 @@ class BookRepository {
 
         const row = result.rows[0]
         if (row) {
-            const book = new Book(row.book_id, row.title, row.first_published, row.description, row.author_ids || [], row.subject_ids || [], row.cover_ids || [])
+            const book = new Book(row.book_id, row.title, row.subtitle, formatDate(row.first_published), row.description, row.author_ids, row.subject_ids, row.cover_ids)
             return book
         }
         
@@ -46,10 +47,10 @@ class BookRepository {
         params.push(offset)
 
         const dataQuery = `
-            SELECT 
-                books.book_id, 
-                books.title, 
-                ARRAY_AGG(DISTINCT book_authors_rel.author_id) AS author_ids,
+            SELECT
+                books.book_id,
+                books.title,
+                COALESCE(ARRAY_AGG(DISTINCT book_authors_rel.author_id) FILTER (WHERE book_authors_rel.author_id IS NOT NULL), '{}') AS author_ids,
                 STRING_AGG(DISTINCT authors.name, ', ') AS author_names
             FROM books
             LEFT JOIN book_authors_rel ON books.book_id = book_authors_rel.book_id
@@ -58,7 +59,7 @@ class BookRepository {
             LEFT JOIN subjects ON book_subjects_rel.subject_id = subjects.subject_id
             ${whereClause}
             GROUP BY books.book_id, books.title
-            ORDER BY books.title
+            ORDER BY books.book_id
             LIMIT $${params.length - 1} OFFSET $${params.length};
         `
 
@@ -76,7 +77,7 @@ class BookRepository {
         const countResult = await db.query(countQuery, params.slice(0, -2))
 
         return {
-            books: dataResult.rows.map(row => new Book(row.book_id, row.title, null, null, row.author_ids || [], null, null)),
+            books: dataResult.rows.map(row => new Book(row.book_id, row.title, null, null, null, row.author_ids, null, null)),
             total: parseInt(countResult.rows[0].total, 10)
         }
     }

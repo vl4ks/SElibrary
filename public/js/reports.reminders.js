@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const remindersTableBody = document.querySelector('#remindersSection tbody')
 

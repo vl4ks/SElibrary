@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const bookHistoryForm = document.getElementById('bookHistoryForm')
     const bookIdInput = document.getElementById('bookIdInput')
@@ -13,6 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     async function searchBookHistory() {
         const bookId = bookIdInput.value.trim()
         const bookTitleValue = bookTitleInput.value.trim()
+
+        if (bookId && bookTitleValue) {
+            alert('Please search by either book ID or title, not both.')
+            return
+        }
 
         if (!bookId && !bookTitleValue)
             return

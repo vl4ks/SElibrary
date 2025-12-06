@@ -1,49 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('searchForm')
-    const tableBody = document.querySelector('#bookTable tbody')
-    const bookCountElement = document.getElementById('bookCount')
-    const maxPagesElement = document.getElementById('maxPages')
-    const currentPageElement = document.querySelector('.status-bar input[type="text"]')
-    const prevPageButton = document.getElementById('prevPage')
-    const nextPageButton = document.getElementById('nextPage')
+const form = document.getElementById('searchForm')
+const tableBody = document.querySelector('#bookTable tbody')
+const bookCountElement = document.getElementById('bookCount')
+const maxPagesElement = document.getElementById('maxPages')
+const currentPageElement = document.getElementById('currentPage')
+const prevPageButton = document.getElementById('prevPage')
+const nextPageButton = document.getElementById('nextPage')
 
-    const limit = 50
-    let currentPage = 1
-    let maxPages = 1
+let currentPage = 1
+let maxPages = 1
+let limit = 10
 
+searchBooks()
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    currentPage = 1
     searchBooks()
+})
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault()
-        currentPage = 1
+prevPageButton.addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--
         searchBooks()
-    })
+    }
+})
 
-    prevPageButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--
-            searchBooks()
-        }
-    })
+nextPageButton.addEventListener('click', () => {
+    if (currentPage < maxPages) {
+        currentPage++
+        searchBooks()
+    }
+})
 
-    nextPageButton.addEventListener('click', () => {
-        if (currentPage < maxPages) {
-            currentPage++
-            searchBooks()
-        }
-    })
+currentPageElement.addEventListener('change', () => {
+    const val = parseInt(currentPageElement.value, 10)
+    if (!isNaN(val) && val >= 1 && val <= maxPages) {
+        currentPage = val
+        searchBooks()
+    } else {
+        currentPageElement.value = currentPage
+    }
+})
 
-    currentPageElement.addEventListener('change', () => {
-        const val = parseInt(currentPageElement.value, 10)
-        if (!isNaN(val) && val >= 1 && val <= maxPages) {
-            currentPage = val
-            searchBooks()
-        } else {
-            currentPageElement.value = currentPage
-        }
-    })
-
-    async function searchBooks() {
+async function searchBooks() {
+    try {
         const title = document.getElementById('title').value.trim()
         const author = document.getElementById('author').value.trim()
         const subject = document.getElementById('subject').value.trim()
@@ -55,47 +55,68 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         if (!res.ok) throw new Error('Request failed')
-        const { rows: books, total } = await res.json()
+
+        const data = await res.json()
+
+        const books = data.rows || []
+        const total = data.total || 0
+        limit = data.limit || limit
 
         renderTable(books)
         updateStatus(total)
+
+    } catch (err) {
+        console.error('Search failed:', err)
+    }
+}
+
+function renderTable(books) {
+    tableBody.innerHTML = ''
+
+    if (!books.length) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="2" style="text-align:center">No results</td>
+            </tr>
+        `
+        return
     }
 
-    function renderTable(books) {
-        tableBody.innerHTML = ''
+    books.forEach(b => {
+        const authors = b.authors.map(a => a.name).join(', ')
+        const row = document.createElement('tr')
 
-        if (!books || books.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center">No results</td></tr>`
-            return
-        }
+        row.innerHTML = `
+            <td>${b.book}</td>
+            <td>${authors}</td>
+        `
 
-        books.forEach(b => {
-            const authors = b.authors.map(a => a.name).join(', ')
-            const row = document.createElement('tr')
-            row.innerHTML = `
-                <td>${b.book}</td>
-                <td>${authors}</td>
-            `
-            tableBody.appendChild(row)
+        tableBody.appendChild(row)
 
-            row.addEventListener('click', async () => {
-                const res = await fetch(`/api/catalog/books/${b.bookID}`)
-                const result = await res.json()
+        row.addEventListener('click', async () => {
+            const res = await fetch(`/api/catalog/books/${b.bookID}`)
+            const result = await res.json()
 
-                if (result.error) {
-                    alert(result.error)
-                    return
-                }
+            if (result.error) {
+                alert(result.error)
+                return
+            }
 
-                window.renderBook(result.book, result.covers, result.subjects, result.authors)
-            })
+            window.renderBook(
+                result.book,
+                result.covers,
+                result.subjects,
+                result.authors
+            )
         })
-    }
+    })
+}
 
-    function updateStatus(total) {
-        bookCountElement.textContent = total
-        maxPages = Math.ceil(total / limit)
-        maxPagesElement.textContent = maxPages
-        currentPageElement.value = currentPage
-    }
-})
+function updateStatus(total) {
+    bookCountElement.textContent = total
+
+    maxPages = Math.max(1, Math.ceil(total / limit))
+    maxPagesElement.textContent = maxPages
+
+    currentPageElement.value = currentPage
+}

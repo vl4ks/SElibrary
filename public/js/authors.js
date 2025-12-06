@@ -5,11 +5,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const wikiLink = document.getElementById('wikiLink')
 
     const pathParts = window.location.pathname.split('/')
-    const bookId = pathParts[pathParts.length - 2]
+    const bookId = pathParts[pathParts.length - 1]
 
     let authors = []
     const response = await fetch(`/api/catalog/authors/${bookId}`)
-    authors = await response.json()
+    authors = (await response.json()).authors
+
+    authorSelect.innerHTML = authors.map(a => `<option value="${a.authorID}">${a.name}</option>`).join('')
 
     const storedAuthorId = localStorage.getItem('selectedAuthorId');
     const selectedAuthor = authors.find(a => a.authorID === storedAuthorId) || authors[0];
@@ -25,11 +27,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
 
     function renderAuthor(author) {
-        birthdayElement.textContent = author.birthDate
-            ? `${author.birthDate}`
-            : 'Birthday unknown'
+        if (author.birthDate) {
+            birthdayElement.style.display = 'block'
+            birthdayElement.textContent = author.birthDate
+        } else {
+            birthdayElement.style.display = 'none'
+        }
 
-        bioElement.textContent = author.bio || 'No biography available'
+        const bioH2 = bioElement.previousElementSibling
+        if (author.bio) {
+            bioH2.style.display = 'block'
+            bioElement.style.display = 'block'
+            bioElement.textContent = author.bio
+        } else {
+            bioH2.style.display = 'none'
+            bioElement.style.display = 'none'
+        }
 
         if (author.wikipedia) {
             wikiLink.href = author.wikipedia

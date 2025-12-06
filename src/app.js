@@ -52,6 +52,7 @@ function createApp() {
     })
 
     const protectedRoutes = [
+        { path: '/collections', view: 'collections' },
         { path: '/customers', view: 'customers' },
         { path: '/addeditcustomer', view: 'addeditcustomer' },
         { path: '/circulation', view: 'circulation' },

@@ -1,5 +1,6 @@
 const db = require("../../db")
 const History = require("../models/history")
+const { formatDate } = require("../utilities/date.utility")
 
 class HistoryRepository {
     async findByOverdue(flag) {
@@ -11,7 +12,7 @@ class HistoryRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
+        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, formatDate(row.issue_date), formatDate(row.return_date), row.status, row.issued_by, row.received_by))
         return list
     }
 
@@ -38,7 +39,7 @@ class HistoryRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
+        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, formatDate(row.issue_date), formatDate(row.return_date), row.status, row.issued_by, row.received_by))
         return list
     }
 
@@ -50,7 +51,7 @@ class HistoryRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by))
+        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, formatDate(row.issue_date), formatDate(row.return_date), row.status, row.issued_by, row.received_by))
         return list
     }
 
