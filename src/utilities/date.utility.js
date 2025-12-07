@@ -1,4 +1,4 @@
-export function formatDate(date) {
+function formatDate(date) {
     if (!date) return '';
 
     const d = new Date(date);
@@ -8,3 +8,5 @@ export function formatDate(date) {
 
     return `${day}.${month}.${year}`;
 }
+
+module.exports = { formatDate };

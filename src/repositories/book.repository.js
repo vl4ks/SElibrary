@@ -5,9 +5,10 @@ const { formatDate } = require("../utilities/date.utility")
 class BookRepository {
     async findById(id) {
         const result = await db.query(`
-            SELECT books.*, COALESCE(ARRAY_AGG(DISTINCT book_authors_rel.author_id) FILTER (WHERE book_authors_rel.author_id IS NOT NULL), '{}') AS author_ids, COALESCE(ARRAY_AGG(DISTINCT book_subjects_rel.subject_id) FILTER (WHERE book_subjects_rel.subject_id IS NOT NULL), '{}') AS subject_ids, COALESCE(ARRAY_AGG(DISTINCT books.cover_id) FILTER (WHERE books.cover_id IS NOT NULL), '{}') AS cover_ids FROM books
+            SELECT books.*, COALESCE(ARRAY_AGG(DISTINCT book_authors_rel.author_id) FILTER (WHERE book_authors_rel.author_id IS NOT NULL), '{}') AS author_ids, COALESCE(ARRAY_AGG(DISTINCT book_subjects_rel.subject_id) FILTER (WHERE book_subjects_rel.subject_id IS NOT NULL), '{}') AS subject_ids, COALESCE(ARRAY_AGG(DISTINCT book_covers_rel.book_cover_id) FILTER (WHERE book_covers_rel.book_cover_id IS NOT NULL), '{}') AS cover_ids FROM books
             LEFT JOIN book_authors_rel ON books.book_id = book_authors_rel.book_id
             LEFT JOIN book_subjects_rel ON books.book_id = book_subjects_rel.book_id
+            LEFT JOIN book_covers_rel ON books.book_id = book_covers_rel.book_id
             WHERE books.book_id = $1
             GROUP BY books.book_id`,
             [id]

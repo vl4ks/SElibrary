@@ -88,49 +88,54 @@ INSERT INTO admins (login, password) VALUES ('admin', 'admin123');
 
 -- book covers
 INSERT INTO book_covers (cover_id, file_path) VALUES
-(1, 'defaultbookpreview.png'),
-(2, 'defaultbookpreview.png'),
-(3, 'defaultbookpreview.png'),
-(4, 'defaultbookpreview.png'),
-(5, 'defaultbookpreview.png'),
-(6, 'defaultbookpreview.png'),
-(7, 'defaultbookpreview.png'),
-(8, 'defaultbookpreview.png'),
-(9, 'defaultbookpreview.png'),
-(10, 'defaultbookpreview.png'),
-(11, 'defaultbookpreview.png'),
-(12, 'defaultbookpreview.png'),
-(13, 'defaultbookpreview.png'),
-(14, 'defaultbookpreview.png'),
-(15, 'defaultbookpreview.png'),
-(16, 'defaultbookpreview.png'),
-(17, 'defaultbookpreview.png'),
-(18, 'defaultbookpreview.png'),
-(19, 'defaultbookpreview.png'),
-(20, 'defaultbookpreview.png');
+(1, 'the-hobbit-1.webp'),
+(2, 'the-hobbit-2.webp'),
+(3, 'the-hobbit-3.webp'),
+(4, 'harry-potter-and-the-order-of-the-phoenix-1.webp'),
+(5, 'les-miserables-1.webp'),
+(6, 'moby-dick-or-the-white-whale-1.webp'),
+(7, 'the-da-vinci-code-1.webp'),
+(8, 'three-men-in-a-boat-to-say-nothing-of-the-dog-1.webp'),
+(9, 'the-hunger-games-1.webp'),
+(10, 'pride-and-prejudice-1.webp'),
+(11, '1984-1.webp');
 
 -- books
-INSERT INTO books (book_id, title, subtitle, first_published, description, cover_id) VALUES
-('OL1000000W', 'The Hobbit', 'Or There and Back Again', '1937-09-21', 'A fantasy novel about Bilbo Baggins adventure.', 1),
-('OL1000001W', 'Harry Potter and the Order of the Phoenix', NULL, '2003-06-21', 'The fifth book in the Harry Potter series.', 2),
-('OL1000002W', 'The homeplace', NULL, '1978-01-01', 'A story of family and heritage.', 3),
-('OL1000003W', 'Les Misérables', NULL, '1862-01-01', 'A historical novel set in France.', 4),
-('OL1000004W', 'Moby Dick, or The White Whale', NULL, '1851-10-18', 'A tale of obsession with a white whale.', 5),
-('OL1000005W', 'The Da Vinci Code', NULL, '2003-03-18', 'A thriller involving secret societies.', 6),
-('OL1000006W', 'Three Men in a Boat (to say nothing of the dog)', NULL, '1889-01-01', 'A humorous account of a boating trip.', 7),
-('OL1000007W', 'The Hunger Games', NULL, '2008-09-14', 'A dystopian novel about survival.', 8),
-('OL1000008W', 'Pride and Prejudice', NULL, '1813-01-28', 'A romantic novel about manners and marriage.', 9),
-('OL1000009W', '1984', NULL, '1949-06-08', 'A dystopian social science fiction novel.', 10),
-('OL1000010W', 'To Kill a Mockingbird', NULL, '1960-07-11', 'A novel about racial injustice.', 11),
-('OL1000011W', 'The Great Gatsby', NULL, '1925-04-10', 'A critique of the American Dream.', 12),
-('OL1000012W', 'War and Peace', NULL, '1869-01-01', 'An epic novel about Russian society.', 13),
-('OL1000013W', 'The Catcher in the Rye', NULL, '1951-07-16', 'A story of teenage angst.', 14),
-('OL1000014W', 'One Hundred Years of Solitude', NULL, '1967-05-30', 'A magical realism novel.', 15),
-('OL1000015W', 'Brave New World', NULL, '1932-01-01', 'A dystopian vision of the future.', 16),
-('OL1000016W', 'The Lord of the Rings', 'The Fellowship of the Ring', '1954-07-29', 'The first part of the epic fantasy trilogy.', 17),
-('OL1000017W', 'Crime and Punishment', NULL, '1866-01-01', 'A psychological thriller.', 18),
-('OL1000018W', 'The Brothers Karamazov', NULL, '1880-01-01', 'A philosophical novel.', 19),
-('OL1000019W', 'Anna Karenina', NULL, '1877-01-01', 'A tragic love story.', 20);
+INSERT INTO books (book_id, title, subtitle, first_published, description) VALUES
+('OL1000000W', 'The Hobbit', 'Or There and Back Again', '1937-09-21', 'A fantasy novel about Bilbo Baggins adventure.'),
+('OL1000001W', 'Harry Potter and the Order of the Phoenix', NULL, '2003-06-21', 'The fifth book in the Harry Potter series.'),
+('OL1000002W', 'The homeplace', NULL, '1978-01-01', 'A story of family and heritage.'),
+('OL1000003W', 'Les Misérables', NULL, '1862-01-01', 'A historical novel set in France.'),
+('OL1000004W', 'Moby Dick, or The White Whale', NULL, '1851-10-18', 'A tale of obsession with a white whale.'),
+('OL1000005W', 'The Da Vinci Code', NULL, '2003-03-18', 'A thriller involving secret societies.'),
+('OL1000006W', 'Three Men in a Boat (to say nothing of the dog)', NULL, '1889-01-01', 'A humorous account of a boating trip.'),
+('OL1000007W', 'The Hunger Games', NULL, '2008-09-14', 'A dystopian novel about survival.'),
+('OL1000008W', 'Pride and Prejudice', NULL, '1813-01-28', 'A romantic novel about manners and marriage.'),
+('OL1000009W', '1984', NULL, '1949-06-08', 'A dystopian social science fiction novel.'),
+('OL1000010W', 'To Kill a Mockingbird', NULL, '1960-07-11', 'A novel about racial injustice.'),
+('OL1000011W', 'The Great Gatsby', NULL, '1925-04-10', 'A critique of the American Dream.'),
+('OL1000012W', 'War and Peace', NULL, '1869-01-01', 'An epic novel about Russian society.'),
+('OL1000013W', 'The Catcher in the Rye', NULL, '1951-07-16', 'A story of teenage angst.'),
+('OL1000014W', 'One Hundred Years of Solitude', NULL, '1967-05-30', 'A magical realism novel.'),
+('OL1000015W', 'Brave New World', NULL, '1932-01-01', 'A dystopian vision of the future.'),
+('OL1000016W', 'The Lord of the Rings', 'The Fellowship of the Ring', '1954-07-29', 'The first part of the epic fantasy trilogy.'),
+('OL1000017W', 'Crime and Punishment', NULL, '1866-01-01', 'A psychological thriller.'),
+('OL1000018W', 'The Brothers Karamazov', NULL, '1880-01-01', 'A philosophical novel.'),
+('OL1000019W', 'Anna Karenina', NULL, '1877-01-01', 'A tragic love story.');
+
+-- book_covers_rel
+INSERT INTO book_covers_rel (book_cover_id, book_id) VALUES
+(1, 'OL1000000W'),
+(2, 'OL1000000W'),
+(3, 'OL1000000W'),
+(4, 'OL1000001W'),
+(5, 'OL1000003W'),
+(6, 'OL1000005W'),
+(7, 'OL1000006W'),
+(8, 'OL1000007W'),
+(9, 'OL1000008W'),
+(10, 'OL1000009W'),
+(11, 'OL1000010W');
 
 -- subjects
 INSERT INTO subjects (subject_id, topic) OVERRIDING SYSTEM VALUE VALUES

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "sass": "sass src/styles:public/css --no-source-map --watch"
+    "sass": "sass src/styles:public/css --no-source-map --watch",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "sass": "^1.93.0"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.1.10"
   }
 }
