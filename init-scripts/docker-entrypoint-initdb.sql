@@ -180,49 +180,49 @@ INSERT INTO authors (author_id, name, bio, birth_date, death_date, wikipedia) OV
 
 -- book_subjects_rel
 INSERT INTO book_subjects_rel (book_id, subject_id) VALUES
-('OL1000000W', 1), ('OL1000000W', 2), -- The Hobbit: Fantasy, Adventure
-('OL1000001W', 1),         -- Harry Potter: Fantasy
-('OL1000002W', 3),         -- The homeplace: Fiction
-('OL1000003W', 4),         -- Les Misérables: Historical Fiction
-('OL1000004W', 2),         -- Moby Dick: Adventure
-('OL1000005W', 5),         -- The Da Vinci Code: Thriller
-('OL1000006W', 6),         -- Three Men in a Boat: Comedy
-('OL1000007W', 7),         -- The Hunger Games: Dystopian
-('OL1000008W', 8),         -- Pride and Prejudice: Romance
-('OL1000009W', 7), ('OL1000009W', 9), -- 1984: Dystopian, Science Fiction
+('OL1000000W', 1), ('OL1000000W', 2),  -- The Hobbit: Fantasy, Adventure
+('OL1000001W', 1),                     -- Harry Potter: Fantasy
+('OL1000002W', 3),                     -- The homeplace: Fiction
+('OL1000003W', 4),                     -- Les Misérables: Historical Fiction
+('OL1000004W', 2),                     -- Moby Dick: Adventure
+('OL1000005W', 5),                     -- The Da Vinci Code: Thriller
+('OL1000006W', 6),                     -- Three Men in a Boat: Comedy
+('OL1000007W', 7),                     -- The Hunger Games: Dystopian
+('OL1000008W', 8),                     -- Pride and Prejudice: Romance
+('OL1000009W', 7), ('OL1000009W', 9),  -- 1984: Dystopian, Science Fiction
 ('OL1000010W', 3), ('OL1000010W', 14), -- To Kill a Mockingbird: Fiction, Drama
 ('OL1000011W', 3), ('OL1000011W', 14), -- The Great Gatsby: Fiction, Drama
-('OL1000012W', 4),         -- War and Peace: Historical Fiction
-('OL1000013W', 3),         -- The Catcher in the Rye: Fiction
-('OL1000014W', 1), ('OL1000014W', 3), -- One Hundred Years of Solitude: Fantasy, Fiction
-('OL1000015W', 7), ('OL1000015W', 9), -- Brave New World: Dystopian, Science Fiction
-('OL1000016W', 1), ('OL1000016W', 2), -- The Lord of the Rings: Fantasy, Adventure
+('OL1000012W', 4),                     -- War and Peace: Historical Fiction
+('OL1000013W', 3),                     -- The Catcher in the Rye: Fiction
+('OL1000014W', 1), ('OL1000014W', 3),  -- One Hundred Years of Solitude: Fantasy, Fiction
+('OL1000015W', 7), ('OL1000015W', 9),  -- Brave New World: Dystopian, Science Fiction
+('OL1000016W', 1), ('OL1000016W', 2),  -- The Lord of the Rings: Fantasy, Adventure
 ('OL1000017W', 3), ('OL1000017W', 10), -- Crime and Punishment: Fiction, Mystery
 ('OL1000018W', 3), ('OL1000018W', 15), -- The Brothers Karamazov: Fiction, Philosophy
 ('OL1000019W', 3), ('OL1000019W', 8);  -- Anna Karenina: Fiction, Romance
 
 -- book_authors_rel
 INSERT INTO book_authors_rel (book_id, author_id) VALUES
-('OL1000000W', 1),         -- The Hobbit: Tolkien
-('OL1000001W', 2),         -- Harry Potter: Rowling
-('OL1000002W', 8),         -- The homeplace: John Doe
-('OL1000003W', 3),         -- Les Misérables: Hugo
-('OL1000004W', 4),         -- Moby Dick: Melville
-('OL1000005W', 5),         -- The Da Vinci Code: Brown
-('OL1000006W', 6),         -- Three Men in a Boat: Jerome
-('OL1000007W', 7),         -- The Hunger Games: Collins
-('OL1000008W', 9),         -- Pride and Prejudice: Austen
-('OL1000009W', 10),        -- 1984: Orwell
-('OL1000010W', 11),        -- To Kill a Mockingbird: Lee
-('OL1000011W', 12),        -- The Great Gatsby: Fitzgerald
-('OL1000012W', 13),        -- War and Peace: Tolstoy
-('OL1000013W', 14),        -- The Catcher in the Rye: Salinger
-('OL1000014W', 15),        -- One Hundred Years of Solitude: García Márquez
-('OL1000015W', 16),        -- Brave New World: Huxley
-('OL1000016W', 1),         -- The Lord of the Rings: Tolkien
-('OL1000017W', 17),        -- Crime and Punishment: Dostoevsky
-('OL1000018W', 17),        -- The Brothers Karamazov: Dostoevsky
-('OL1000019W', 13);        -- Anna Karenina: Tolstoy
+('OL1000000W', 1),                     -- The Hobbit: Tolkien
+('OL1000001W', 2),                     -- Harry Potter: Rowling
+('OL1000002W', 8),                     -- The homeplace: John Doe
+('OL1000003W', 3),                     -- Les Misérables: Hugo
+('OL1000004W', 4),                     -- Moby Dick: Melville
+('OL1000005W', 5),                     -- The Da Vinci Code: Brown
+('OL1000006W', 6),                     -- Three Men in a Boat: Jerome
+('OL1000007W', 7),                     -- The Hunger Games: Collins
+('OL1000008W', 9),                     -- Pride and Prejudice: Austen
+('OL1000009W', 10),                    -- 1984: Orwell
+('OL1000010W', 11),                    -- To Kill a Mockingbird: Lee
+('OL1000011W', 12),                    -- The Great Gatsby: Fitzgerald
+('OL1000012W', 13),                    -- War and Peace: Tolstoy
+('OL1000013W', 14),                    -- The Catcher in the Rye: Salinger
+('OL1000014W', 15),                    -- One Hundred Years of Solitude: García Márquez
+('OL1000015W', 16),                    -- Brave New World: Huxley
+('OL1000016W', 1),                     -- The Lord of the Rings: Tolkien
+('OL1000017W', 17),                    -- Crime and Punishment: Dostoevsky
+('OL1000018W', 17),                    -- The Brothers Karamazov: Dostoevsky
+('OL1000019W', 13);                    -- Anna Karenina: Tolstoy
 
 -- customers
 INSERT INTO customers (customer_id, name, address, postal_code, city, phone, email) VALUES

@@ -59,11 +59,26 @@ class CustomerRepository {
     }
 
     async create(customer) {
+        const maxIdResult = await db.query(`
+            SELECT customer_id FROM customers
+            WHERE customer_id LIKE 'C%'
+            ORDER BY CAST(SUBSTRING(customer_id FROM 2) AS INTEGER) DESC
+            LIMIT 1
+        `);
+        let nextIdNumber = 1000;
+        if (maxIdResult.rows.length > 0) {
+            const maxId = maxIdResult.rows[0].customer_id;
+            const currentNumber = parseInt(maxId.substring(1), 10);
+            nextIdNumber = currentNumber + 1;
+        }
+        const customerId = `C${nextIdNumber}`;
+
         const result = await db.query(`
-            INSERT INTO customers (name, address, postal_code, city, phone, email)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO customers (customer_id, name, address, postal_code, city, phone, email)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING customer_id
         `, [
+            customerId,
             customer.name,
             customer.address,
             customer.postalCode,
