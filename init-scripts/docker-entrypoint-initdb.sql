@@ -143,12 +143,12 @@ INSERT INTO book_covers_rel (book_cover_id, book_id) VALUES
 (3, 'OL1000000W'),
 (4, 'OL1000001W'),
 (5, 'OL1000003W'),
-(6, 'OL1000005W'),
-(7, 'OL1000006W'),
-(8, 'OL1000007W'),
-(9, 'OL1000008W'),
-(10, 'OL1000009W'),
-(11, 'OL1000010W');
+(6, 'OL1000004W'),
+(7, 'OL1000005W'),
+(8, 'OL1000006W'),
+(9, 'OL1000007W'),
+(10, 'OL1000008W'),
+(11, 'OL1000009W');
 
 -- subjects
 INSERT INTO subjects (subject_id, topic) OVERRIDING SYSTEM VALUE VALUES

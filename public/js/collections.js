@@ -39,15 +39,23 @@ function renderCollections(collections) {
 
 function createCollectionCard(c) {
 	const div = document.createElement("div");
-	div.className = "collection-item";
+	div.className = "collection-item ";
 	div.dataset.id = c.id;
 
-	const count = c.books?.length || 0;
+	const books = c.books || [];
 
 	div.innerHTML = `
         <div class="collection-info">
             <h3>${c.title}</h3>
-            <p>${count} book${count === 1 ? "" : "s"}</p>
+        </div>
+
+        <div class="books-list">
+            ${books.map(b => `
+                <div class="book-cover">
+                    <img src="/img/covers/${b.image || 'defaultbookpreview.png'}" alt="${b.title}">
+                    <p>${b.title}</p>
+                </div>
+            `).join('')}
         </div>
 
         <div class="collection-actions">
@@ -90,13 +98,42 @@ function closeModal() {
 }
 
 
+async function fetchCoverByTitle(title) {
+	try {
+		const searchRes = await fetch("/api/catalog/search", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ title, page: 1 })
+		});
+
+		const searchData = await searchRes.json();
+		const books = searchData.rows || [];
+
+		if (books.length === 0) {
+			return "defaultbookpreview.png";
+		}
+
+		const firstBook = books[0];
+		const bookRes = await fetch(`/api/catalog/books/${firstBook.bookID}`);
+		const bookData = await bookRes.json();
+
+		if (bookData.covers && bookData.covers.length > 0) {
+			return bookData.covers[0].filePath;
+		} else {
+			return "defaultbookpreview.png";
+		}
+	} catch (err) {
+		console.error("Error fetching cover for", title, err);
+		return "defaultbookpreview.png";
+	}
+}
+
 function addBookRow(book = { id: "", title: "", image: "" }) {
 	const wrapper = document.createElement("div");
 	wrapper.className = "book-item";
 
 	wrapper.innerHTML = `
         <input class="book-title" type="text" placeholder="Book title" value="${book.title || ""}">
-        <input class="book-image" type="text" placeholder="Image name" value="${book.image || ""}">
         <button class="delete-book">✕</button>
     `;
 
@@ -110,8 +147,7 @@ function addBookRow(book = { id: "", title: "", image: "" }) {
 function getBooksFromModal() {
 	return [...document.querySelectorAll("#books-list .book-item")].map(row => ({
 		id: "",
-		title: row.querySelector(".book-title").value.trim(),
-		image: row.querySelector(".book-image").value.trim()
+		title: row.querySelector(".book-title").value.trim()
 	})).filter(b => b.title !== "");
 }
 
@@ -125,7 +161,13 @@ async function saveCollection() {
 		return;
 	}
 
-	const payload = { title, books };
+	// Fetch covers for each book
+	const booksWithCovers = await Promise.all(books.map(async (book) => {
+		const image = await fetchCoverByTitle(book.title);
+		return { ...book, image };
+	}));
+
+	const payload = { title, books: booksWithCovers };
 
 	if (editingCollection) {
 		await fetch(`/api/collections/${editingCollection.id}`, {
