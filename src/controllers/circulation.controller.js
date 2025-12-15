@@ -40,23 +40,23 @@ class CirculationController {
     }
 
     async return(req, res, next) {
-        console.log('CirculationController.return called with req.body:', req.body)
-        try {
-            const { bookId, customerId } = req.body;
+    try {
+        const { bookId, customerId } = req.body;
 
-            if (!bookId) throw new BadRequestError("bookId is required");
-            if (!customerId) throw new BadRequestError("customerId is required");
+        if (!bookId) throw new BadRequestError("bookId is required");
+        if (!customerId) throw new BadRequestError("customerId is required");
 
-            await circulationService.return(bookId, customerId);
+        const { isOverdue } = await circulationService.return(bookId, customerId);
 
-            console.log('CirculationController.return successful')
-            res.json({ message: "Book returned successfully" });
+        res.json({
+            message: "Book returned successfully",
+            isOverdue
+        });
 
-        } catch (err) {
-            console.log('CirculationController.return error:', err.message)
-            next(err);
-        }
+    } catch (err) {
+        next(err);
     }
+}
 
     async renew(req, res, next) {
         console.log('CirculationController.renew called with req.body:', req.body)

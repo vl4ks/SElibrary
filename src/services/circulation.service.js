@@ -4,11 +4,11 @@ const History = require("../models/history");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 class CirculationService {
+
     async circulation(customerId) {
-        console.log('CirculationService.circulation called with customerId:', customerId)
         const customer = await customerRepository.findById(customerId);
+
         if (!customer) {
-            console.log('CirculationService.circulation throwing: Customer not found')
             throw new NotFoundError(`Customer with ID ${customerId} not found`);
         }
 
@@ -16,27 +16,27 @@ class CirculationService {
         const now = new Date();
 
         const currentIssues = allRecords
-            .filter(r => r.status === "issued")
+            .filter(r => r.status === false) // книги на руках
             .map(r => ({
                 ...r,
-                overdue: new Date(r.returnDate) < now
+                overdue: r.returnDate && new Date(r.returnDate) < now
             }));
 
-        const history = allRecords.filter(r => r.status !== "issued");
+        const history = allRecords.filter(r => r.status === true);
 
-        const result = { customer, currentIssues, history };
-        console.log('CirculationService.circulation returning', result)
-        return result;
+        return { customer, currentIssues, history };
     }
 
     async issue(bookId, customerId) {
-        console.log('CirculationService.issue called with', { bookId, customerId })
         const maxBooksPerCustomer = 5;
-        const issuedRecords = await historyRepository.findByCustomerId(customerId);
-        const countOfIssue = issuedRecords.filter(r => r.status === "issued").length;
-        if (countOfIssue === maxBooksPerCustomer) {
-            console.log('CirculationService.issue throwing: Max limit reached')
-            throw new BadRequestError(`Max limit of issued books (${maxBooksPerCustomer}) reached`);
+
+        const allRecords = await historyRepository.findByCustomerId(customerId);
+        const countOfIssue = allRecords.filter(r => r.status === false).length;
+
+        if (countOfIssue >= maxBooksPerCustomer) {
+            throw new BadRequestError(
+                `Max limit of issued books (${maxBooksPerCustomer}) reached`
+            );
         }
 
         const issueDate = new Date();
@@ -49,72 +49,56 @@ class CirculationService {
             customerId,
             issueDate,
             returnDate,
-            "issued",
+            false,          // status: книга на руках
             "librarian",
             null
         );
 
         await historyRepository.create(newHistory);
-        console.log('CirculationService.issue completed successfully')
     }
 
     async return(bookId, customerId) {
-        console.log('CirculationService.return called with', { bookId, customerId })
         const allRecords = await historyRepository.findByCustomerId(customerId);
-        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued");
+
+        const activeRecord = allRecords.find(
+            r => r.bookID === bookId && r.status === false
+        );
 
         if (!activeRecord) {
-            console.log('CirculationService.return throwing: Active issued record not found')
-            throw new BadRequestError("Active issued record not found");
+            throw new BadRequestError("Active issue record not found");
         }
 
         const today = new Date();
-        const isOverdue = today > new Date(activeRecord.returnDate);
+        const isOverdue =
+            activeRecord.returnDate &&
+            new Date(activeRecord.returnDate) < today;
 
-        const newHistory = new History(
-            null,
-            bookId,
-            customerId,
-            activeRecord.issueDate,
-            today,
-            "returned",
-            activeRecord.issuedBy,
-            "librarian"
-        );
+        activeRecord.status = true;
+        activeRecord.returnDate = today;
+        activeRecord.receivedBy = "librarian";
 
-        await historyRepository.create(newHistory);
+        await historyRepository.update(activeRecord);
 
-        const result = { isOverdue };
-        console.log('CirculationService.return returning', result)
-        return result;
+        return { isOverdue };
     }
 
     async renew(bookId, customerId) {
-        console.log('CirculationService.renew called with', { bookId, customerId })
         const allRecords = await historyRepository.findByCustomerId(customerId);
-        const activeRecord = allRecords.find(r => r.bookID === bookId && r.status === "issued");
+
+        const activeRecord = allRecords.find(
+            r => r.bookID === bookId && r.status === false
+        );
 
         if (!activeRecord) {
-            console.log('CirculationService.renew throwing: Active issued record not found')
-            throw new BadRequestError("Active issued record not found");
+            throw new BadRequestError("Active issue record not found");
         }
 
         const extendedReturnDate = new Date(activeRecord.returnDate);
         extendedReturnDate.setDate(extendedReturnDate.getDate() + 7);
 
-        const newHistory = new History(
-            null,
-            bookId,
-            customerId,
-            activeRecord.issueDate,
-            extendedReturnDate,
-            "renewed",
-            activeRecord.issuedBy,
-            null
-        );
+        activeRecord.returnDate = extendedReturnDate;
 
-        await historyRepository.create(newHistory);
-        console.log('CirculationService.renew completed successfully')
+        await historyRepository.update(activeRecord);
     }
 }
 

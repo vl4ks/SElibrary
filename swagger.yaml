@@ -1,17 +1,31 @@
 openapi: 3.0.4
+
 info:
   title: SElibrary API
+  description: Backend API for Library Management System
   version: 1.0.0
 
 servers:
   - url: http://localhost:8080
     description: Local server
 
+tags:
+  - name: Auth
+  - name: Catalog
+  - name: Customer
+  - name: Circulation
+  - name: Collections
+  - name: Report
+
 paths:
+
+  # =========================
+  # AUTH
+  # =========================
+
   /api/auth/login:
     post:
-      tags:
-        - Auth
+      tags: [Auth]
       summary: User login
       requestBody:
         required: true
@@ -19,6 +33,7 @@ paths:
           application/json:
             schema:
               type: object
+              required: [username, password]
               properties:
                 username:
                   type: string
@@ -26,7 +41,7 @@ paths:
                   type: string
       responses:
         '200':
-          description: Successful login (redirect)
+          description: Successful login
         '401':
           description: Invalid credentials
           content:
@@ -36,23 +51,23 @@ paths:
                 properties:
                   error:
                     type: string
-                    enum:
-                      - invalid_credentials
 
   /api/auth/logout:
     get:
-      tags:
-        - Auth
+      tags: [Auth]
       summary: User logout
       responses:
         '200':
-          description: Successful logout (redirect)
+          description: Successful logout
+
+  # =========================
+  # CATALOG
+  # =========================
 
   /api/catalog/search:
     post:
-      tags:
-        - Catalog
-      summary: Search books by title, author, subject
+      tags: [Catalog]
+      summary: Search books
       requestBody:
         required: true
         content:
@@ -62,19 +77,15 @@ paths:
               properties:
                 title:
                   type: string
-                  example: "Dune"
                 author:
                   type: string
-                  example: "Frank Herbert"
                 subject:
                   type: string
-                  example: "Science Fiction"
                 page:
                   type: integer
-                  example: 1
       responses:
         '200':
-          description: Search results
+          description: Search result
           content:
             application/json:
               schema:
@@ -87,25 +98,19 @@ paths:
                       properties:
                         book_id:
                           type: string
-                        book:
+                        title:
                           type: string
                         authors:
                           type: array
                           items:
-                            type: object
-                            properties:
-                              author_id:
-                                type: string
-                              name:
-                                type: string
+                            type: string
                   total:
                     type: integer
 
   /api/catalog/books/{bookId}:
     get:
-      tags:
-        - Catalog
-      summary: Get book details by ID
+      tags: [Catalog]
+      summary: Get book details
       parameters:
         - name: bookId
           in: path
@@ -114,74 +119,16 @@ paths:
             type: string
       responses:
         '200':
-          description: Book info including authors, covers, subjects
+          description: Book details
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  book:
-                    type: object
-                    properties:
-                      book_id:
-                        type: string
-                      title:
-                        type: string
-                      first_published:
-                        type: string
-                      description:
-                        type: string
-                      cover_ids:
-                        type: array
-                        items:
-                          type: string
-                      author_ids:
-                        type: array
-                        items:
-                          type: string
-                      subject_ids:
-                        type: array
-                        items:
-                          type: string
-                  covers:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        cover_id:
-                          type: string
-                        filepath:
-                          type: string
-                  subjects:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        subject_id:
-                          type: string
-                        topic:
-                          type: string
-                  authors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        author_id:
-                          type: string
-                        name:
-                          type: string
-                        birth_date:
-                          type: string
-                        bio:
-                          type: string
-                        wikipedia:
-                          type: string
 
   /api/catalog/authors/{bookId}:
     get:
-      tags:
-        - Catalog
-      summary: Get all authors for a book
+      tags: [Catalog]
+      summary: Get authors of book
       parameters:
         - name: bookId
           in: path
@@ -190,7 +137,7 @@ paths:
             type: string
       responses:
         '200':
-          description: List of authors for the book
+          description: List of authors
           content:
             application/json:
               schema:
@@ -202,24 +149,30 @@ paths:
                       type: object
                       properties:
                         author_id:
-                          type: string
+                          type: integer
                         name:
                           type: string
-                        birth_date:
-                          type: string
-                        bio:
-                          type: string
-                        wikipedia:
-                          type: string
 
-  /api/report/reminders:
+  # =========================
+  # CUSTOMER
+  # =========================
+
+  /api/customer/search:
     get:
-      tags:
-        - Report
-      summary: Get overdue book reminders
+      tags: [Customer]
+      summary: Search customers
+      parameters:
+        - name: customerId
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
       responses:
         '200':
-          description: List of overdue books with customer info
+          description: Customer list
           content:
             application/json:
               schema:
@@ -227,71 +180,266 @@ paths:
                 items:
                   type: object
                   properties:
-                    customer_id:
+                    customerID:
                       type: string
-                    book_id:
+                    name:
                       type: string
-                    issue_date:
+                    address:
                       type: string
-                      format: date
-                    return_date:
+                    postalCode:
                       type: string
-                      format: date
-                    title:
+                    city:
                       type: string
 
-  /api/report/search:
+  /api/customer:
     post:
-      tags:
-        - Report
-      summary: Search book history by book ID or title
+      tags: [Customer]
+      summary: Add customer
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [name]
               properties:
-                bookId:
+                name:
                   type: string
-                  example: "1"
-                bookTitle:
+                address:
                   type: string
-                  example: "Dune"
+                postalCode:
+                  type: string
+                city:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
       responses:
         '200':
-          description: Book history and book details
+          description: Customer created
+
+  /api/customer/{id}:
+    get:
+      tags: [Customer]
+      summary: Get customer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Customer data
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  rows:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        customer_id:
-                          type: string
-                        issue_date:
-                          type: string
-                          format: date
-                        return_date:
-                          type: string
-                          format: date
-                  book:
+
+    put:
+      tags: [Customer]
+      summary: Update customer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Customer updated
+
+  /api/circulation/customer/{id}:
+    get:
+      tags: [Circulation]
+      summary: Get customer circulation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Circulation info
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/circulation/issue:
+    post:
+      tags: [Circulation]
+      summary: Issue book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bookId, customerId]
+              properties:
+                bookId:
+                  type: string
+                customerId:
+                  type: string
+      responses:
+        '200':
+          description: Book issued
+
+  /api/circulation/return:
+    post:
+      tags: [Circulation]
+      summary: Return book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bookId, customerId]
+              properties:
+                bookId:
+                  type: string
+                customerId:
+                  type: string
+      responses:
+        '200':
+          description: Book returned
+
+  /api/circulation/renew:
+    post:
+      tags: [Circulation]
+      summary: Renew book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bookId, customerId]
+              properties:
+                bookId:
+                  type: string
+                customerId:
+                  type: string
+      responses:
+        '200':
+          description: Book renewed
+
+  /api/collections:
+    get:
+      tags: [Collections]
+      summary: Get all collections
+      responses:
+        '200':
+          description: Collection list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    books:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          image:
+                            type: string
+
+    post:
+      tags: [Collections]
+      summary: Create collection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+                books:
+                  type: array
+                  items:
                     type: object
                     properties:
-                      book_id:
-                        type: string
                       title:
                         type: string
+                      image:
+                        type: string
+      responses:
+        '200':
+          description: Collection created
 
-  /api/report/export:
+  /api/collections/{id}:
+    patch:
+      tags: [Collections]
+      summary: Update collection
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Collection updated
+
+    delete:
+      tags: [Collections]
+      summary: Delete collection
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Collection deleted
+
+
+  /api/report/reminders:
+    get:
+      tags: [Report]
+      summary: Overdue books
+      responses:
+        '200':
+          description: Overdue list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /api/report/search:
     post:
-      tags:
-        - Report
-      summary: Export book history to CSV
+      tags: [Report]
+      summary: Search history
       requestBody:
         required: true
         content:
@@ -301,22 +449,27 @@ paths:
               properties:
                 bookId:
                   type: string
-                  example: "1"
                 bookTitle:
                   type: string
-                  example: "Dune"
       responses:
         '200':
-          description: CSV file download
+          description: History result
+
+  /api/report/export:
+    post:
+      tags: [Report]
+      summary: Export history to CSV
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: CSV file
           content:
             text/csv:
               schema:
                 type: string
                 format: binary
-
-tags:
- - name: Auth
- - name: Catalog
- - name: Customer
- - name: Circulation
- - name: Report

@@ -1,5 +1,5 @@
 const manageCustomerService = require('../services/customer.service');
-const { BadRequestError } = require('../errors');
+const { BadRequestError, NotFoundError } = require('../errors');
 
 class CustomerController {
     async search(req, res, next) {

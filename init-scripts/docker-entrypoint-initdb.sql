@@ -81,6 +81,19 @@ CREATE TABLE history (
     FOREIGN KEY (received_by) REFERENCES admins(user_id)
 );
 
+CREATE TABLE collections (
+    collection_id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE collection_books (
+    id SERIAL PRIMARY KEY,
+    collection_id INT NOT NULL REFERENCES collections(collection_id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    image VARCHAR(255)
+);
+
+
 -- TEST DATA
 
 -- admin user

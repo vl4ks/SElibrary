@@ -70,6 +70,7 @@ function createApp() {
     const customerRoutes = require('./routes/customer.routes')
     const circulationRoutes = require('./routes/circulation.routes')
     const reportRoutes = require('./routes/report.routes')
+    const collectionRoutes = require('./routes/collection.routes')
     const swaggerRoutes = require('./routes/swagger.routes')
 
     app.use('/api/auth', authRoutes)
@@ -77,6 +78,7 @@ function createApp() {
     app.use('/api/customer', customerRoutes)
     app.use('/api/circulation', circulationRoutes)
     app.use('/api/report', reportRoutes)
+    app.use('/api/collections', collectionRoutes)
     app.use(swaggerRoutes)
 
     app.use((err, req, res, next) => {
