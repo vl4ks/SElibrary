@@ -296,3 +296,19 @@ INSERT INTO history (book_id, customer_id, issue_date, return_date, status, issu
 ('OL1000005W', 'C1007', '2017-09-25', NULL, false, 1, NULL),
 ('OL1000006W', 'C1008', '2017-10-01', '2017-10-15', true, 1, 1),
 ('OL1000007W', 'C1009', '2017-10-05', NULL, false, 1, NULL);
+
+-- collections
+INSERT INTO collections (collection_id, title) OVERRIDING SYSTEM VALUE VALUES
+(1, 'New Year'),
+(2, 'Harry Potter');
+
+-- collection_books
+INSERT INTO collection_books (id, collection_id, title, image) OVERRIDING SYSTEM VALUE VALUES
+(89, 1, 'Moby Dick, or The White Whale', 'moby-dick-or-the-white-whale-1.webp'),
+(90, 1, 'The Da Vinci Code', 'the-da-vinci-code-1.webp'),
+(91, 1, 'Pride and Prejudice', 'pride-and-prejudice-1.webp'),
+(92, 1, 'Three Men in a Boat (to say nothing of the dog)', 'three-men-in-a-boat-to-say-nothing-of-the-dog-1.webp'),
+(93, 1, 'Harry Potter and the Order of the Phoenix', 'harry-potter-and-the-order-of-the-phoenix-1.webp'),
+(94, 1, 'The Hobbit', 'the-hobbit-1.webp'),
+(95, 1, 'Les Misérables', 'les-miserables-1.webp'),
+(35, 2, 'Harry Potter and the Order of the Phoenix', 'harry-potter-and-the-order-of-the-phoenix-1.webp');

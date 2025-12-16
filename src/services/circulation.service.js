@@ -1,5 +1,6 @@
 const historyRepository = require("../repositories/history.repository");
 const customerRepository = require("../repositories/customer.repository");
+const bookRepository = require("../repositories/book.repository");
 const History = require("../models/history");
 const { BadRequestError, NotFoundError } = require("../errors");
 
@@ -28,6 +29,16 @@ class CirculationService {
     }
 
     async issue(bookId, customerId) {
+        const book = await bookRepository.findById(bookId);
+        if (!book) {
+            throw new NotFoundError("Book not found in the catalog");
+        }
+
+        const customer = await customerRepository.findById(customerId);
+        if (!customer) {
+            throw new NotFoundError("Customer not found in the system");
+        }
+
         const maxBooksPerCustomer = 5;
 
         const allRecords = await historyRepository.findByCustomerId(customerId);
@@ -58,6 +69,16 @@ class CirculationService {
     }
 
     async return(bookId, customerId) {
+        const book = await bookRepository.findById(bookId);
+        if (!book) {
+            throw new NotFoundError("Book not found in the catalog");
+        }
+
+        const customer = await customerRepository.findById(customerId);
+        if (!customer) {
+            throw new NotFoundError("Customer not found in the system");
+        }
+
         const allRecords = await historyRepository.findByCustomerId(customerId);
 
         const activeRecord = allRecords.find(
@@ -83,6 +104,16 @@ class CirculationService {
     }
 
     async renew(bookId, customerId) {
+        const book = await bookRepository.findById(bookId);
+        if (!book) {
+            throw new NotFoundError("Book not found in the catalog");
+        }
+
+        const customer = await customerRepository.findById(customerId);
+        if (!customer) {
+            throw new NotFoundError("Customer not found in the system");
+        }
+
         const allRecords = await historyRepository.findByCustomerId(customerId);
 
         const activeRecord = allRecords.find(
