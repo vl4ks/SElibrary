@@ -16,10 +16,10 @@ class CirculationService {
         const now = new Date();
 
         const currentIssues = allRecords
-            .filter(r => r.status === false) 
+            .filter(r => r.status === false)
             .map(r => ({
                 ...r,
-                overdue: r.returnDate && new Date(r.returnDate) < now
+                overdue: r.returnDate && r.returnDate < now
             }));
 
         const history = allRecords.filter(r => r.status === true);

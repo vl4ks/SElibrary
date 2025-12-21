@@ -9,7 +9,7 @@ class ReportService {
         const result = await Promise.all(rows.map(async row => {
             const book = await bookRepository.findById(row.bookID)
             const customer = await customerRepository.findById(row.customerID)
-            return { ...row, title: book.title, customerName: customer.name }
+            return { ...row, title: book ? book.title : 'Unknown', customerName: customer ? customer.name : 'Unknown' }
         }))
         console.log('ReportService.getReminders returning', result)
         return result
@@ -34,7 +34,7 @@ class ReportService {
         // Add customer names to rows
         const rowsWithNames = await Promise.all(rows.map(async row => {
             const customer = await customerRepository.findById(row.customerID)
-            return { ...row, customerName: customer.name }
+            return { ...row, customerName: customer ? customer.name : 'Unknown' }
         }))
 
         const result = { rows: rowsWithNames, book }

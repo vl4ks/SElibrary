@@ -21,19 +21,22 @@ class HistoryRepository {
         ORDER BY h.return_date ASC
     `, [flag]);
 
-    return result.rows.map(row =>
-        new History(
+    return result.rows.map(row => {
+        const history = new History(
             row.history_id,
             row.book_id,
             row.title,
             row.customer_id,
-            row.issue_date,     
-            row.return_date,    
+            row.issue_date,
+            row.return_date,
             row.status,
             row.issued_by,
             row.received_by
-        )
-    );
+        );
+        history.issueDate = formatDate(row.issue_date);
+        history.returnDate = formatDate(row.return_date);
+        return history;
+    });
 }
 
 
@@ -61,8 +64,9 @@ class HistoryRepository {
 
         const rows = result.rows
         const list = rows.map(row => {
-            const history = new History(row.history_id, row.book_id, row.customer_id, formatDate(row.issue_date), formatDate(row.return_date), row.status, row.issued_by, row.received_by)
-            history.title = row.title
+            const history = new History(row.history_id, row.book_id, row.title, row.customer_id, row.issue_date, row.return_date, row.status, row.issued_by, row.received_by)
+            history.issueDate = formatDate(row.issue_date)
+            history.returnDate = formatDate(row.return_date)
             return history
         })
         return list
@@ -86,19 +90,22 @@ class HistoryRepository {
         ORDER BY h.issue_date DESC
     `, [customer_id]);
 
-    return result.rows.map(row =>
-        new History(
+    return result.rows.map(row => {
+        const history = new History(
             row.history_id,
             row.book_id,
             row.title,
             row.customer_id,
-            row.issue_date,     
-            row.return_date,    
+            row.issue_date,
+            row.return_date,
             row.status,
             row.issued_by,
             row.received_by
-        )
-    );
+        );
+        history.issueDate = formatDate(row.issue_date);
+        history.returnDate = formatDate(row.return_date);
+        return history;
+    });
 }
 
 

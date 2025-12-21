@@ -150,10 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             row.innerHTML = `
                 <td>${rec.title || rec.bookID}</td>
-                <td>${rec.issueDate ? new Date(rec.issueDate).toLocaleDateString() : ""}</td>
+                <td>${rec.issueDate || ""}</td>
                 <td>
-                    ${rec.returnDate ? new Date(rec.returnDate).toLocaleDateString() : ""}
-                    ${isOverdue ? '<span class="overdue-icon">!</span>' : ''}
+                    ${rec.returnDate || ""}
+                    ${isOverdue ? '<img src="/img/warning-symbol.png" alt="Overdue" class="overdue-icon">' : ''}
                 </td>
             `;
             tbody.appendChild(row);
