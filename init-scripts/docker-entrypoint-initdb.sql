@@ -27,7 +27,8 @@ CREATE TABLE books (
 
 CREATE TABLE book_covers_rel (
     book_cover_id INTEGER REFERENCES book_covers(cover_id),
-    book_id VARCHAR(15) REFERENCES books(book_id)
+    book_id VARCHAR(15) REFERENCES books(book_id),
+    PRIMARY KEY (book_cover_id, book_id)
 );
 
 CREATE TABLE subjects (
@@ -136,6 +137,47 @@ INSERT INTO books (book_id, title, subtitle, first_published, description) VALUE
 ('OL1000018W', 'The Brothers Karamazov', NULL, '1880-01-01', 'A philosophical novel.'),
 ('OL1000019W', 'Anna Karenina', NULL, '1877-01-01', 'A tragic love story.');
 
+INSERT INTO books (book_id, title, subtitle, first_published, description) VALUES
+('OL1000020W', 'Foundation', NULL, '1951-01-01', 'A science fiction novel about the collapse of a galactic empire.'),
+('OL1000021W', 'Foundation and Empire', NULL, '1952-01-01', 'The second book in the Foundation series.'),
+('OL1000022W', 'Second Foundation', NULL, '1953-01-01', 'The third book in the Foundation series.'),
+('OL1000023W', 'Dune', NULL, '1965-08-01', 'A science fiction novel set in a distant future.'),
+('OL1000024W', 'Dune Messiah', NULL, '1969-01-01', 'The sequel to Dune.'),
+('OL1000025W', 'Children of Dune', NULL, '1976-01-01', 'The third novel in the Dune series.'),
+('OL1000026W', 'The Left Hand of Darkness', NULL, '1969-03-01', 'A novel about gender and society.'),
+('OL1000027W', 'A Wizard of Earthsea', NULL, '1968-01-01', 'A fantasy novel about a young wizard.'),
+('OL1000028W', 'Do Androids Dream of Electric Sheep?', NULL, '1968-01-01', 'A dystopian science fiction novel.'),
+('OL1000029W', 'The Hitchhiker’s Guide to the Galaxy', NULL, '1979-10-12', 'A comedy science fiction novel.'),
+('OL1000030W', 'A Game of Thrones', NULL, '1996-08-06', 'The first novel in A Song of Ice and Fire.'),
+('OL1000031W', 'A Clash of Kings', NULL, '1998-11-16', 'The second novel in A Song of Ice and Fire.'),
+('OL1000032W', 'The Three-Body Problem', NULL, '2006-01-01', 'A hard science fiction novel.'),
+('OL1000033W', 'The Dark Forest', NULL, '2008-01-01', 'The sequel to The Three-Body Problem.'),
+('OL1000034W', 'The Martian', NULL, '2011-02-11', 'A novel about survival on Mars.'),
+('OL1000035W', 'Good Omens', 'The Nice and Accurate Prophecies of Agnes Nutter, Witch', '1990-05-01', 'A comedic novel about the apocalypse.'),
+('OL1000036W', 'The Talisman', NULL, '1984-11-08', 'A dark fantasy novel involving parallel worlds.');
+
+INSERT INTO books (book_id, title, subtitle, first_published, description) VALUES
+('OL1000037W', 'Lord of the Flies', NULL, '1954-09-17', 'A novel about boys stranded on an island.'),
+('OL1000038W', 'Slaughterhouse-Five', NULL, '1969-03-31', 'A novel about the bombing of Dresden.'),
+('OL1000039W', 'The Grapes of Wrath', NULL, '1939-04-14', 'A story of migrant workers during the Great Depression.'),
+('OL1000040W', 'Catch-22', NULL, '1961-11-10', 'A satirical novel about World War II.'),
+('OL1000041W', 'The Sound and the Fury', NULL, '1929-10-07', 'A novel about the Compson family.'),
+('OL1000042W', 'Their Eyes Were Watching God', NULL, '1937-09-18', 'A novel about an African American woman.'),
+('OL1000043W', 'The Sun Also Rises', NULL, '1926-10-22', 'A novel about expatriates in Europe.'),
+('OL1000044W', 'A Farewell to Arms', NULL, '1929-09-27', 'A love story set during World War I.'),
+('OL1000045W', 'The Old Man and the Sea', NULL, '1952-09-01', 'A story of an old fisherman.'),
+('OL1000046W', 'Fahrenheit 451', NULL, '1953-10-19', 'A dystopian novel about book burning.'),
+('OL1000047W', 'The Road', NULL, '2006-09-26', 'A father and son in a post-apocalyptic world.'),
+('OL1000048W', 'No Country for Old Men', NULL, '2005-07-19', 'A crime thriller.'),
+('OL1000049W', 'Blood Meridian', NULL, '1985-04-01', 'A violent western.'),
+('OL1000050W', 'The Bell Jar', NULL, '1963-01-14', 'A novel about mental health.'),
+('OL1000051W', 'The Handmaid''s Tale', NULL, '1985-08-01', 'A dystopian society.'),
+('OL1000052W', 'Alias Grace', NULL, '1996-09-01', 'A historical fiction.'),
+('OL1000053W', 'The Testaments', NULL, '2019-09-10', 'A sequel to The Handmaid''s Tale.'),
+('OL1000054W', 'The Color Purple', NULL, '1982-01-01', 'An epistolary novel.'),
+('OL1000055W', 'Beloved', NULL, '1987-09-02', 'A ghost story.'),
+('OL1000056W', 'Song of Solomon', NULL, '1977-01-01', 'A magical realism novel.');
+
 -- book_covers_rel
 INSERT INTO book_covers_rel (book_cover_id, book_id) VALUES
 (1, 'OL1000000W'),
@@ -166,7 +208,8 @@ INSERT INTO subjects (subject_id, topic) OVERRIDING SYSTEM VALUE VALUES
 (12, 'Horror'),
 (13, 'Poetry'),
 (14, 'Drama'),
-(15, 'Philosophy');
+(15, 'Philosophy'),
+(16, 'Magic');
 
 -- authors
 INSERT INTO authors (author_id, name, bio, birth_date, death_date, wikipedia) OVERRIDING SYSTEM VALUE VALUES
@@ -189,12 +232,46 @@ INSERT INTO authors (author_id, name, bio, birth_date, death_date, wikipedia) OV
 (17, 'Fyodor Dostoevsky', 'Russian novelist, short story writer, essayist, journalist and philosopher.', '1821-11-11', '1881-02-09', 'https://en.wikipedia.org/wiki/Fyodor_Dostoevsky'),
 (18, 'Franz Kafka', 'German-speaking Bohemian Jewish novelist and short story writer.', '1883-07-03', '1924-06-03', 'https://en.wikipedia.org/wiki/Franz_Kafka'),
 (19, 'Ernest Hemingway', 'American novelist, short story writer, and journalist.', '1899-07-21', '1961-07-02', 'https://en.wikipedia.org/wiki/Ernest_Hemingway'),
-(20, 'Mark Twain', 'American writer, humorist, entrepreneur, publisher, and lecturer.', '1835-11-30', '1910-04-21', 'https://en.wikipedia.org/wiki/Mark_Twain');
+(20, 'Mark Twain', 'American writer, humorist, entrepreneur, publisher, and lecturer.', '1835-11-30', '1910-04-21', 'https://en.wikipedia.org/wiki/Mark_Twain'),
+(21, 'Neil Gaiman', 'English author of short fiction, novels, and comics.', '1960-11-10', NULL, 'https://en.wikipedia.org/wiki/Neil_Gaiman'),
+(22,'Terry Pratchett', 'English author of fantasy novels, especially Discworld.', '1948-04-28', '2015-03-12', 'https://en.wikipedia.org/wiki/Terry_Pratchett'),
+(23,'Stephen King', 'American author of horror, supernatural fiction, suspense.', '1947-09-21', NULL, 'https://en.wikipedia.org/wiki/Stephen_King'),
+(24,'Peter Straub', 'American novelist and poet.', '1943-03-02', '2022-09-04', 'https://en.wikipedia.org/wiki/Peter_Straub'),
+(25,'Robert C. Martin', 'American software engineer and author.', '1952-12-05', NULL, 'https://en.wikipedia.org/wiki/Robert_C._Martin'),
+(26,'Martin Fowler', 'British software developer and author.', '1963-12-18', NULL, 'https://en.wikipedia.org/wiki/Martin_Fowler'),
+(27,'Kent Beck', 'American software engineer, creator of Extreme Programming.', '1961-03-31', NULL, 'https://en.wikipedia.org/wiki/Kent_Beck'),
+(28,'Erich Gamma', 'Swiss software engineer, co-author of Design Patterns.', '1961-03-13', NULL, 'https://en.wikipedia.org/wiki/Erich_Gamma'),
+(29,'Richard Helm', 'Computer scientist and software engineer.', NULL, NULL, NULL),
+(30,'Ralph Johnson', 'American computer scientist.', '1955-01-01', NULL, 'https://en.wikipedia.org/wiki/Ralph_Johnson_(computer_scientist)'),
+(31,'John Vlissides', 'American software engineer.', '1961-08-02', '2005-11-24', 'https://en.wikipedia.org/wiki/John_Vlissides'),
+(32, 'Isaac Asimov', 'Science fiction writer and professor of biochemistry.', '1920-01-02', '1992-04-06', 'https://en.wikipedia.org/wiki/Isaac_Asimov'),
+(33, 'Arthur C. Clarke', 'British science fiction writer and futurist.', '1917-12-16', '2008-03-19', 'https://en.wikipedia.org/wiki/Arthur_C._Clarke'),
+(34, 'Frank Herbert', 'American science fiction author.', '1920-10-08', '1986-02-11', 'https://en.wikipedia.org/wiki/Frank_Herbert'),
+(35, 'Ursula K. Le Guin', 'American author of speculative fiction.', '1929-10-21', '2018-01-22', 'https://en.wikipedia.org/wiki/Ursula_K._Le_Guin'),
+(36, 'Philip K. Dick', 'American science fiction writer.', '1928-12-16', '1982-03-02', 'https://en.wikipedia.org/wiki/Philip_K._Dick'),
+(37, 'Douglas Adams', 'English author and humorist.', '1952-03-11', '2001-05-11', 'https://en.wikipedia.org/wiki/Douglas_Adams'),
+(38, 'Brandon Sanderson', 'American fantasy and science fiction writer.', '1975-12-19', NULL, 'https://en.wikipedia.org/wiki/Brandon_Sanderson'),
+(39, 'George R. R. Martin', 'American novelist and short story writer.', '1948-09-20', NULL, 'https://en.wikipedia.org/wiki/George_R._R._Martin'),
+(40, 'Cixin Liu', 'Chinese science fiction writer.', '1963-06-23', NULL, 'https://en.wikipedia.org/wiki/Liu_Cixin'),
+(41, 'Andy Weir', 'American novelist and software engineer.', '1972-06-16', NULL, 'https://en.wikipedia.org/wiki/Andy_Weir'),
+(42, 'William Golding', 'English novelist, playwright, and poet.', '1911-09-19', '1993-06-19', 'https://en.wikipedia.org/wiki/William_Golding'),
+(43, 'Kurt Vonnegut', 'American writer.', '1922-11-11', '2007-04-11', 'https://en.wikipedia.org/wiki/Kurt_Vonnegut'),
+(44, 'John Steinbeck', 'American author.', '1902-02-27', '1968-12-20', 'https://en.wikipedia.org/wiki/John_Steinbeck'),
+(45, 'Joseph Heller', 'American author.', '1923-05-01', '1999-12-12', 'https://en.wikipedia.org/wiki/Joseph_Heller'),
+(46, 'William Faulkner', 'American writer.', '1897-09-25', '1962-07-06', 'https://en.wikipedia.org/wiki/William_Faulkner'),
+(47, 'Zora Neale Hurston', 'American author.', '1891-01-07', '1960-01-28', 'https://en.wikipedia.org/wiki/Zora_Neale_Hurston'),
+(48, 'Ray Bradbury', 'American author.', '1920-08-22', '2012-06-05', 'https://en.wikipedia.org/wiki/Ray_Bradbury'),
+(49, 'Cormac McCarthy', 'American novelist.', '1933-07-20', '2023-06-13', 'https://en.wikipedia.org/wiki/Cormac_McCarthy'),
+(50, 'Sylvia Plath', 'American poet and novelist.', '1932-10-27', '1963-02-11', 'https://en.wikipedia.org/wiki/Sylvia_Plath'),
+(51, 'Margaret Atwood', 'Canadian poet and novelist.', '1939-11-18', NULL, 'https://en.wikipedia.org/wiki/Margaret_Atwood'),
+(52, 'Alice Walker', 'American novelist.', '1944-02-09', NULL, 'https://en.wikipedia.org/wiki/Alice_Walker'),
+(53, 'Toni Morrison', 'American novelist.', '1931-02-18', '2019-08-05', 'https://en.wikipedia.org/wiki/Toni_Morrison');
 
 -- book_subjects_rel
 INSERT INTO book_subjects_rel (book_id, subject_id) VALUES
 ('OL1000000W', 1), ('OL1000000W', 2),  -- The Hobbit: Fantasy, Adventure
 ('OL1000001W', 1),                     -- Harry Potter: Fantasy
+('OL1000001W', 16),                    -- Harry Potter: Magic
 ('OL1000002W', 3),                     -- The homeplace: Fiction
 ('OL1000003W', 4),                     -- Les Misérables: Historical Fiction
 ('OL1000004W', 2),                     -- Moby Dick: Adventure
@@ -212,7 +289,27 @@ INSERT INTO book_subjects_rel (book_id, subject_id) VALUES
 ('OL1000016W', 1), ('OL1000016W', 2),  -- The Lord of the Rings: Fantasy, Adventure
 ('OL1000017W', 3), ('OL1000017W', 10), -- Crime and Punishment: Fiction, Mystery
 ('OL1000018W', 3), ('OL1000018W', 15), -- The Brothers Karamazov: Fiction, Philosophy
-('OL1000019W', 3), ('OL1000019W', 8);  -- Anna Karenina: Fiction, Romance
+('OL1000019W', 3), ('OL1000019W', 8),  -- Anna Karenina: Fiction, Romance
+('OL1000037W', 1), ('OL1000037W', 2),
+('OL1000038W', 9), ('OL1000038W', 3),
+('OL1000039W', 4), ('OL1000039W', 3),
+('OL1000040W', 3), ('OL1000040W', 6),
+('OL1000041W', 3), ('OL1000041W', 14),
+('OL1000042W', 3), ('OL1000042W', 8),
+('OL1000043W', 3), ('OL1000043W', 8),
+('OL1000044W', 3), ('OL1000044W', 8),
+('OL1000045W', 2), ('OL1000045W', 3),
+('OL1000046W', 7), ('OL1000046W', 9),
+('OL1000047W', 3), ('OL1000047W', 7),
+('OL1000048W', 3), ('OL1000048W', 5),
+('OL1000049W', 2), ('OL1000049W', 3),
+('OL1000050W', 3), ('OL1000050W', 14),
+('OL1000051W', 7), ('OL1000051W', 3),
+('OL1000052W', 3), ('OL1000052W', 10),
+('OL1000053W', 7), ('OL1000053W', 3),
+('OL1000054W', 3), ('OL1000054W', 8),
+('OL1000055W', 3), ('OL1000055W', 12),
+('OL1000056W', 1), ('OL1000056W', 3);
 
 -- book_authors_rel
 INSERT INTO book_authors_rel (book_id, author_id) VALUES
@@ -235,7 +332,46 @@ INSERT INTO book_authors_rel (book_id, author_id) VALUES
 ('OL1000016W', 1),                     -- The Lord of the Rings: Tolkien
 ('OL1000017W', 17),                    -- Crime and Punishment: Dostoevsky
 ('OL1000018W', 17),                    -- The Brothers Karamazov: Dostoevsky
-('OL1000019W', 13);                    -- Anna Karenina: Tolstoy
+('OL1000019W', 13),                    -- Anna Karenina: Tolstoy
+('OL1000020W', 32),
+('OL1000021W', 32),
+('OL1000022W', 32),
+('OL1000023W', 34),
+('OL1000024W', 34),
+('OL1000025W', 34),
+('OL1000026W', 35),
+('OL1000027W', 35),
+('OL1000028W', 36),
+('OL1000029W', 37),
+('OL1000030W', 39),
+('OL1000031W', 39),
+('OL1000032W', 40),
+('OL1000033W', 40),
+('OL1000034W', 41),
+('OL1000035W', 21),
+('OL1000035W', 22),
+('OL1000036W', 23),
+('OL1000036W', 24),
+('OL1000037W', 42),
+('OL1000038W', 43),
+('OL1000039W', 44),
+('OL1000040W', 45),
+('OL1000041W', 46),
+('OL1000042W', 47),
+('OL1000043W', 19),
+('OL1000044W', 19),
+('OL1000045W', 19),
+('OL1000046W', 48),
+('OL1000047W', 49),
+('OL1000048W', 49),
+('OL1000049W', 49),
+('OL1000050W', 50),
+('OL1000051W', 51),
+('OL1000052W', 51),
+('OL1000053W', 51),
+('OL1000054W', 52),
+('OL1000055W', 53),
+('OL1000056W', 53);
 
 -- customers
 INSERT INTO customers (customer_id, name, address, postal_code, city, phone, email) VALUES
@@ -312,3 +448,4 @@ INSERT INTO collection_books (id, collection_id, title, image) OVERRIDING SYSTEM
 (94, 1, 'The Hobbit', 'the-hobbit-1.webp'),
 (95, 1, 'Les Misérables', 'les-miserables-1.webp'),
 (35, 2, 'Harry Potter and the Order of the Phoenix', 'harry-potter-and-the-order-of-the-phoenix-1.webp');
+

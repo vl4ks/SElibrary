@@ -7,7 +7,7 @@ const { NotFoundError } = require("../errors")
 class CatalogService {
     async search(title, author, subject, page = 1) {
         console.log('CatalogService.search called with', { title, author, subject, page })
-        const limit = 10
+        const limit = 50
         const offset = (page - 1) * limit;
         const { books, total } = await bookRepository.findByParameters(title, author, subject, limit, offset)
 

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.renderBook = function (book, coversData = [], subjectsData = [], authorsData = []) {
         bookSection.style.display = 'grid'
-        titleElement.textContent = book.title || 'Untitled'
+        titleElement.textContent = (book.title || 'Untitled') + (book.subtitle ? ` (${book.subtitle})` : '')
 
         if (authorsData.length > 0) {
             authorsContainer.innerHTML = authorsData.map(a =>

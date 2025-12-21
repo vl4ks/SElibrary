@@ -8,7 +8,7 @@ const nextPageButton = document.getElementById('nextPage')
 
 let currentPage = 1
 let maxPages = 1
-let limit = 10
+let limit = 50
 
 searchBooks()
 
