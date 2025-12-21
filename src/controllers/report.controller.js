@@ -40,6 +40,19 @@ class ReportController {
             return next(error)
         }
     }
+
+    async exportReminders(req, res, next) {
+        console.log('ReportController.exportReminders called')
+        try {
+            const rows = await reportService.getReminders()
+            const filePath = CSVExporter.exportReminders(rows)
+            console.log('ReportController.exportReminders downloading file:', filePath)
+            res.download(filePath)
+        } catch (error) {
+            console.log('ReportController.exportReminders error:', error.message)
+            return next(error)
+        }
+    }
 }
 
 module.exports = new ReportController()

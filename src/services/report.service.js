@@ -1,5 +1,6 @@
 const historyRepository = require("../repositories/history.repository")
 const bookRepository = require("../repositories/book.repository")
+const customerRepository = require("../repositories/customer.repository")
 
 class ReportService {
     async getReminders() {
@@ -7,7 +8,8 @@ class ReportService {
         const rows = await historyRepository.findByOverdue(true)
         const result = await Promise.all(rows.map(async row => {
             const book = await bookRepository.findById(row.bookID)
-            return { ...row, title: book.title }
+            const customer = await customerRepository.findById(row.customerID)
+            return { ...row, title: book.title, customerName: customer.name }
         }))
         console.log('ReportService.getReminders returning', result)
         return result
@@ -29,7 +31,13 @@ class ReportService {
             rows = await historyRepository.findByParameters(null, bookTitle)
         }
 
-        const result = { rows, book }
+        // Add customer names to rows
+        const rowsWithNames = await Promise.all(rows.map(async row => {
+            const customer = await customerRepository.findById(row.customerID)
+            return { ...row, customerName: customer.name }
+        }))
+
+        const result = { rows: rowsWithNames, book }
         console.log('ReportService.search returning', result)
         return result
     }

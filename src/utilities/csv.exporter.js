@@ -14,14 +14,47 @@ class CSVExporter {
         if (!data.rows || data.rows.length === 0)
             throw new BadRequestError('No data to export')
 
-        const headers = ['Book ID', 'Title', 'Customer ID', 'Date of issue', 'Return Date', 'Was overdue']
+        const headers = ['Book ID', 'Title', 'Customer Name', 'Date of issue', 'Return Date', 'Was overdue']
         const rows = data.rows.map(row => [
             row.bookID,
             row.title,
-            row.customerID,
+            row.customerName,
             row.issueDate,
             row.returnDate,
             row.status
+        ])
+
+        const csvContent = [headers, ...rows]
+            .map(row => row.map(field => `"${field || ''}"`).join(','))
+            .join('\n')
+
+        const filePath = path.join(__dirname, '../../exports', filename)
+        try {
+            fs.mkdirSync(path.dirname(filePath), { recursive: true })
+            fs.writeFileSync(filePath, csvContent, 'utf8')
+        } catch (error) {
+            throw new Error(`Failed to write CSV file: ${error.message}`)
+        }
+
+        return filePath
+    }
+
+    static exportReminders(data, filename) {
+        if (!data || !Array.isArray(data))
+            throw new BadRequestError('Invalid data provided')
+
+        if (!filename) {
+            filename = 'reminders.csv'
+        }
+        if (data.length === 0)
+            throw new BadRequestError('No data to export')
+
+        const headers = ['Title', 'Customer Name', 'Date of Issue', 'Return Until']
+        const rows = data.map(row => [
+            row.title,
+            row.customerName,
+            row.issueDate,
+            row.returnDate
         ])
 
         const csvContent = [headers, ...rows]

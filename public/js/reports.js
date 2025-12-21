@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
     remindersSection.style.display = 'block'
     bookHistorySection.style.display = 'none'
 
+    document.getElementById('exportButton').style.display = 'block'
+
     remindersButton.addEventListener('click', () => {
         remindersSection.style.display = 'block'
         bookHistorySection.style.display = 'none'
-        document.getElementById('exportButton').style.display = 'none'
     })
 
     bookHistoryButton.addEventListener('click', () => {
         remindersSection.style.display = 'none'
         bookHistorySection.style.display = 'grid'
-        document.getElementById('exportButton').style.display = 'block'
     })
 })

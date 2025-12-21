@@ -39,7 +39,11 @@ class HistoryRepository {
         )
 
         const rows = result.rows
-        const list = rows.map(row => new History(row.history_id, row.book_id, row.customer_id, formatDate(row.issue_date), formatDate(row.return_date), row.status, row.issued_by, row.received_by))
+        const list = rows.map(row => {
+            const history = new History(row.history_id, row.book_id, row.customer_id, formatDate(row.issue_date), formatDate(row.return_date), row.status, row.issued_by, row.received_by)
+            history.title = row.title
+            return history
+        })
         return list
     }
 

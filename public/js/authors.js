@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     authorSelect.innerHTML = authors.map(a => `<option value="${a.authorID}">${a.name}</option>`).join('')
 
     const storedAuthorId = localStorage.getItem('selectedAuthorId');
-    const selectedAuthor = authors.find(a => a.authorID === storedAuthorId) || authors[0];
+    const selectedAuthor = authors.find(a => a.authorID == storedAuthorId) || authors[0];
 
     if (selectedAuthor) {
         authorSelect.value = selectedAuthor.authorID
@@ -22,14 +22,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     authorSelect.addEventListener('change', () => {
-        const selected = authors.find(a => a.authorID === authorSelect.value)
-        if (selected) renderAuthor(selected)
+        const selected = authors.find(a => a.authorID == authorSelect.value)
+        if (selected) {
+            renderAuthor(selected)
+            localStorage.setItem('selectedAuthorId', selected.authorID)
+        }
     })
 
     function renderAuthor(author) {
-        if (author.birthDate) {
+        let dateStr = author.birthDate;
+        if (author.deathDate) {
+            dateStr += ' - ' + author.deathDate;
+        }
+        if (dateStr.trim()) {
             birthdayElement.style.display = 'block'
-            birthdayElement.textContent = author.birthDate
+            birthdayElement.textContent = dateStr
         } else {
             birthdayElement.style.display = 'none'
         }

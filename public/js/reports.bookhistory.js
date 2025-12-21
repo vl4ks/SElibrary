@@ -20,8 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
             return
         }
 
-        if (!bookId && !bookTitleValue)
+        if (!bookId && !bookTitleValue) {
+            bookHistoryResults.innerHTML = `
+                <tr>
+                    <td colspan="3" style="text-align:center">No results</td>
+                </tr>
+            `
+            bookTitle.textContent = ''
             return
+        }
 
         const res = await fetch('/api/report/search', {
             method: 'POST',
@@ -41,13 +48,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         bookHistoryResults.innerHTML = ''
 
-        if (!data.rows || data.rows.length === 0)
+        if (!data.rows || data.rows.length === 0) {
+            bookHistoryResults.innerHTML = `
+                <tr>
+                    <td colspan="3" style="text-align:center">No results</td>
+                </tr>
+            `
             return
+        }
 
         data.rows.forEach(row => {
             const tr = document.createElement('tr')
             tr.innerHTML = `
-                <td>${row.customerID}</td>
+                <td>${row.customerName}</td>
                 <td>${row.issueDate}</td>
                 <td>${row.returnDate}</td>
             `
