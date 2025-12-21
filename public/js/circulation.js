@@ -5,7 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentIssuesTableBody = document.querySelector(".current-issues tbody");
     const historyTableBody = document.querySelector(".history tbody");
 
+    const bookIdInput = document.getElementById("bookid");
+    const titleParagraph = document.querySelector(".bookmanage form div p");
+
+    const issueButton = document.querySelector(".issue-return .buttons button:first-child");
+    const renewButton = document.querySelector(".bookmanage.renew button");
+
     let currentCustomerId = null;
+    let selectedRow = null;
+
+    issueButton.disabled = true;
+
+    currentIssuesTableBody.addEventListener("click", (e) => {
+        const tr = e.target.closest("tr");
+        if (!tr || tr.querySelector("td[colspan]")) return;
+
+        if (selectedRow) selectedRow.classList.remove("selected");
+        selectedRow = tr;
+        selectedRow.classList.add("selected");
+
+        bookIdInput.value = tr.dataset.bookid;
+    });
 
     searchForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -21,30 +41,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
             populateCustomerInfo(data.customer || {});
             populateTable(currentIssuesTableBody, data.currentIssues);
-            populateTable(historyTableBody, data.history);
+            populateTable(historyTableBody, data.history, true);
+
+            issueButton.disabled = false;
+
         } catch (err) {
             alert(err.message);
+            currentCustomerId = null;
+            issueButton.disabled = true;
+        }
+    });
+
+    bookIdInput.addEventListener("input", async () => {
+        const bookId = bookIdInput.value.trim();
+        if (!bookId) {
+            titleParagraph.textContent = "Title: -";
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/circulation/book/${bookId}`);
+            const data = await response.json();
+
+            titleParagraph.textContent = response.ok && data.title ? 
+                `Title: ${data.title}` : "Title: -";
+
+        } catch {
+            titleParagraph.textContent = "Title: -";
         }
     });
 
     document.querySelectorAll(".bookmanage .buttons button").forEach(button => {
         button.addEventListener("click", async (e) => {
             const action = e.target.textContent.toLowerCase();
-            const bookIdInput = document.getElementById("bookid");
-            const bookId = bookIdInput.value.trim();
+            let bookId = bookIdInput.value.trim();
 
-            if (!currentCustomerId) return alert("Сначала выберите клиента");
-            if (!bookId) return alert("Введите Book ID");
+            if (!currentCustomerId) return;
+
+            if (action !== "renew" && !bookId) {
+                alert("Введите Book ID");
+                return;
+            }
+
+            if (action === "renew" && !selectedRow) {
+                alert("Выберите строку для продления");
+                return;
+            }
 
             try {
-                let url = "";
-                switch(action) {
-                    case "issue": url = "/api/circulation/issue"; break;
-                    case "return": url = "/api/circulation/return"; break;
-                    case "renew": url = "/api/circulation/renew"; break;
-                    default: return;
-                }
-
+                const url = `/api/circulation/${action}`;
                 const response = await fetch(url, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -52,57 +97,65 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 const result = await response.json();
-                if (!response.ok) throw new Error(result.message || "Ошибка");
-
-                if (action === "return" && result.isOverdue) {
-                    alert(result.message + " ⚠️ Книга была просрочена!");
-                } else {
-                    alert(result.message);
+                if (!response.ok) {
+                    alert(result.message || "Ошибка");
+                    return;
                 }
+
+                alert(result.message);
 
                 const updated = await fetch(`/api/circulation/customer/${currentCustomerId}`);
                 const updatedData = await updated.json();
+
                 populateTable(currentIssuesTableBody, updatedData.currentIssues);
-                populateTable(historyTableBody, updatedData.history);
+                populateTable(historyTableBody, updatedData.history, true);
+
+                selectedRow = null;
+                bookIdInput.value = "";
+
             } catch (err) {
                 alert(err.message);
             }
         });
     });
 
-    function populateTable(tbody, records) {
+    function populateTable(tbody, records, isHistory = false) {
         tbody.innerHTML = "";
         if (!records || records.length === 0) {
-            const row = document.createElement("tr");
-            const td = document.createElement("td");
-            td.colSpan = 3;
-            td.textContent = "Нет записей";
-            row.appendChild(td);
-            tbody.appendChild(row);
+            tbody.innerHTML = `<tr><td colspan="3">Нет записей</td></tr>`;
             return;
         }
 
+        const today = new Date();
+
         records.forEach(rec => {
-            const row = document.createElement("tr");
+            let isOverdue = false;
 
-            const titleCell = document.createElement("td");
-            titleCell.textContent = rec.title || rec.bookID;
-
-            const issueCell = document.createElement("td");
-            issueCell.textContent = rec.issueDate ? new Date(rec.issueDate).toLocaleDateString() : "";
-
-            const returnCell = document.createElement("td");
-            const returnDate = rec.returnDate ? new Date(rec.returnDate).toLocaleDateString() : "";
-            returnCell.textContent = returnDate;
-
-            if (rec.overdue) {
-                returnCell.innerHTML += ' ⚠️';
-                returnCell.classList.add("overdue");
+            if (isHistory) {
+                if (rec.returnDate && rec.issueDate) {
+                    const issued = new Date(rec.issueDate);
+                    const returned = new Date(rec.returnDate);
+                    const due = new Date(issued);
+                    due.setDate(due.getDate() + 21);
+                    isOverdue = returned > due;
+                }
+            } else {
+                if (rec.returnDate) {
+                    isOverdue = new Date(rec.returnDate) < today;
+                }
             }
 
-            row.appendChild(titleCell);
-            row.appendChild(issueCell);
-            row.appendChild(returnCell);
+            const row = document.createElement("tr");
+            row.dataset.bookid = rec.bookID;
+
+            row.innerHTML = `
+                <td>${rec.title || rec.bookID}</td>
+                <td>${rec.issueDate ? new Date(rec.issueDate).toLocaleDateString() : ""}</td>
+                <td>
+                    ${rec.returnDate ? new Date(rec.returnDate).toLocaleDateString() : ""}
+                    ${isOverdue ? '<span class="overdue-icon">!</span>' : ''}
+                </td>
+            `;
             tbody.appendChild(row);
         });
     }
@@ -112,7 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <h1>${customer.name || "-"}<br>(${customer.customerID || "-"})</h1>
             <p>${customer.postalCode || "-"} ${customer.city || "-"}</p>
             <div class="buttons">
-                <button onclick="window.location.href='/addeditcustomer?id=${customer.customerID}'">Edit...</button>
+                <button onclick="window.location.href='/addeditcustomer?id=${customer.customerID}'">
+                    Edit...
+                </button>
             </div>
         `;
     }
