@@ -58,14 +58,18 @@ function createCollectionCard(c) {
             `).join('')}
         </div>
 
+        ${window.isLoggedIn ? `
         <div class="collection-actions">
             <button class="edit-btn">Edit</button>
             <button class="delete-btn">Delete</button>
         </div>
+        ` : ''}
     `;
 
-	div.querySelector(".edit-btn").addEventListener("click", () => openModal(c));
-	div.querySelector(".delete-btn").addEventListener("click", () => deleteCollection(c.id));
+	if (window.isLoggedIn) {
+		div.querySelector(".edit-btn").addEventListener("click", () => openModal(c));
+		div.querySelector(".delete-btn").addEventListener("click", () => deleteCollection(c.id));
+	}
 
 	return div;
 }

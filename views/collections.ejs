@@ -2,7 +2,7 @@
     title: 'Collections',
     stylesheet: 'collections.css',
     user,
-    body: `
+    body: user ? `
         <main>
             <section class="buttons collection-button">
                 <button id="add-collection-btn">Add collection</button>
@@ -36,6 +36,21 @@
             </div>
         </div>
 
+        <script>
+            window.isLoggedIn = true;
+        </script>
+        <script src="/js/collections.js"></script>
+    ` : `
+        <main>
+            <section class="collections">
+                <div id="collections-list" class="collection">
+                </div>
+            </section>
+        </main>
+
+        <script>
+            window.isLoggedIn = false;
+        </script>
         <script src="/js/collections.js"></script>
     `
 }) %>

@@ -44,7 +44,8 @@ function createApp() {
     const publicRoutes = [
         { path: '/auth', view: 'auth' },
         { path: '/catalog', view: 'catalog' },
-        { path: '/catalog/authors/:bookId', view: 'authors' }
+        { path: '/catalog/authors/:bookId', view: 'authors' },
+        { path: '/collections', view: 'collections' }
     ]
 
     publicRoutes.forEach(r => {
@@ -52,7 +53,6 @@ function createApp() {
     })
 
     const protectedRoutes = [
-        { path: '/collections', view: 'collections' },
         { path: '/customers', view: 'customers' },
         { path: '/addeditcustomer', view: 'addeditcustomer' },
         { path: '/circulation', view: 'circulation' },
