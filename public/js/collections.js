@@ -161,7 +161,6 @@ async function saveCollection() {
 		return;
 	}
 
-	// Fetch covers for each book
 	const booksWithCovers = await Promise.all(books.map(async (book) => {
 		const image = await fetchCoverByTitle(book.title);
 		return { ...book, image };
@@ -169,23 +168,29 @@ async function saveCollection() {
 
 	const payload = { title, books: booksWithCovers };
 
-	if (editingCollection) {
-		await fetch(`/api/collections/${editingCollection.id}`, {
-			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(payload)
-		});
-	} else {
-		await fetch("/api/collections", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(payload)
-		});
-	}
+	try {
+		if (editingCollection) {
+			await fetch(`/api/collections/${editingCollection.id}`, {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			});
+		} else {
+			await fetch("/api/collections", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			});
+		}
 
-	closeModal();
-	loadCollections();
+		closeModal();
+		loadCollections();
+
+	} catch (err) {
+		alert(err.error || err.message || "Ошибка");
+	}
 }
+
 
 
 async function deleteCollection(id) {

@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("main form");
+
     const customerIdInput = document.getElementById("customer_id");
     const idInput = document.getElementById("id");
     const nameInput = document.getElementById("name");
     const addressInput = document.getElementById("address");
-    const postalcodeInput = document.getElementById("zip");
+    const postalCodeInput = document.getElementById("zip");
     const cityInput = document.getElementById("city");
     const phoneInput = document.getElementById("phone");
     const emailInput = document.getElementById("email");
@@ -13,22 +14,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const customerId = params.get("id");
 
     if (customerId) {
-        fetch(`/api/customers/search?customerId=${customerId}`)
+
+        fetch(`/api/customer/${customerId}`)
             .then(res => res.json())
-            .then(customers => {
-                if (customers.length === 0) {
+            .then(customer => {
+                if (!customer) {
                     alert("Customer not found");
                     return;
                 }
-                const customer = customers[0];
+
                 customerIdInput.value = customer.customerID;
                 idInput.value = customer.customerID;
-                nameInput.value = customer.name;
-                addressInput.value = customer.address;
-                postalcodeInput.value = customer.postalCode;
-                cityInput.value = customer.city;
-                phoneInput.value = customer.phone;
-                emailInput.value = customer.email;
+                idInput.disabled = true;
+                nameInput.value = customer.name || "";
+                addressInput.value = customer.address || "";
+                postalCodeInput.value = customer.postalCode || "";
+                cityInput.value = customer.city || "";
+                phoneInput.value = customer.phone || "";
+                emailInput.value = customer.email || "";
             })
             .catch(err => {
                 console.error(err);
@@ -40,10 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
 
         const data = {
-            customer_id: customerIdInput.value,
+            customerID: customerIdInput.value,
             name: nameInput.value.trim(),
             address: addressInput.value.trim(),
-            postalcode: postalcodeInput.value.trim(),
+            postalCode: postalCodeInput.value.trim(),
             city: cityInput.value.trim(),
             phone: phoneInput.value.trim(),
             email: emailInput.value.trim()
@@ -52,13 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             let response;
             if (customerId) {
-                response = await fetch(`/api/customers/${customerId}`, {
+                response = await fetch(`/api/customer/edit`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
             } else {
-                response = await fetch(`/api/customers`, {
+                response = await fetch(`/api/customer/add`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
@@ -68,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.error || "Something went wrong");
+                throw new Error(result.error || result.message || "Something went wrong");
             }
 
             alert(result.message);

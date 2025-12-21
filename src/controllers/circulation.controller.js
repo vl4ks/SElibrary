@@ -21,23 +21,27 @@ class CirculationController {
     }
 
     async issue(req, res, next) {
-        console.log('CirculationController.issue called with req.body:', req.body)
-        try {
-            const { bookId, customerId } = req.body;
+    try {
+        const { bookId, customerId } = req.body;
 
-            if (!bookId) throw new BadRequestError("bookId is required");
-            if (!customerId) throw new BadRequestError("customerId is required");
+        if (!bookId) throw new BadRequestError("bookId is required");
+        if (!customerId) throw new BadRequestError("customerId is required");
 
-            await circulationService.issue(bookId, customerId);
+        await circulationService.issue(bookId, customerId);
 
-            console.log('CirculationController.issue successful')
-            res.json({ message: "Book issued successfully" });
+        res.json({ message: "Book issued successfully" });
 
-        } catch (err) {
-            console.log('CirculationController.issue error:', err.message)
+    } catch (err) {
+        if (err instanceof BadRequestError) {
+            res.status(400).json({ message: err.message });
+        } else if (err instanceof NotFoundError) {
+            res.status(404).json({ message: err.message });
+        } else {
             next(err);
         }
     }
+}
+
 
     async return(req, res, next) {
     try {

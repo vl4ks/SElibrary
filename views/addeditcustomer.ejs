@@ -5,20 +5,23 @@
     body: `
         <main>
             <form>
+                <!-- Скрытое поле для ID -->
+                <input type="hidden" id="customer_id">
+
                 <div>
                     <label for="id">ID</label>
                     <input id="id" disabled>
                 </div>
                 <div>
                     <label for="name">Name</label>
-                    <input id="name" type="text">
+                    <input id="name" type="text" required>
                 </div>
                 <div>
                     <label for="address">Address</label>
                     <input id="address" type="text">
                 </div>
                 <div>
-                    <div class="" style="display: flex; gap: 4px;">
+                    <div style="display: flex; gap: 4px;">
                         <label for="zip">Zip</label>
                         <label>/</label>
                         <label for="city">City</label>
@@ -45,5 +48,7 @@
                 </div>
             </form>
         </main>
+
+        <script src="/js/addeditcustomer.js"></script>
     `
 }) %>

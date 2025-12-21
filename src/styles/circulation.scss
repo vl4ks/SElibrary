@@ -8,17 +8,13 @@ main {
         flex-direction: column;
         justify-content: space-between;
 
-        img {
-            height: 200px;
-        }
+        img { height: 200px; }
 
         .customer {
-            h1 {
-                padding-left: 0;
-            }
+            h1 { padding-left: 0; }
         }
     }
-    
+
     .circulation {
         padding: 0;
 
@@ -29,17 +25,7 @@ main {
             }
         }
 
-        .issue-return {
-            padding: 12px;
-
-            h1 {
-                padding-left: 0;
-            }
-
-            p {
-                margin: 4px 0;
-            }
-        }
+        .issue-return { padding: 12px; h1 { padding-left: 0; } p { margin: 4px 0; } }
 
         .bookmanage {
             display: grid;
@@ -47,34 +33,48 @@ main {
             gap: 12px;
         }
 
-        .history {
-            border-bottom: none;
-        }
-    
+        .history { border-bottom: none; }
+
         .buttons {
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             gap: 4px;
 
-            button {
-                width: 100%;
-                display: block;
+            button { width: 100%; display: block; }
+
+            button:disabled {
+                background-color: #cfcfcf !important;
+                color: #777 !important;
+                cursor: not-allowed;
+                opacity: 0.6;
+                pointer-events: none;
             }
         }
 
-        .renew {
-            height: 30px;
-            padding: 12px;
-        }
+        .renew { height: 30px; padding: 12px; }
 
         .overdue {
             color: red;
             font-weight: bold;
         }
+
+        .overdue-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            height: 16px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 1;
+            margin-left: 8px;
+        }
+
     }
 
-    h1 {
-        padding-left: 12px;
-    }
+    h1 { padding-left: 12px; }
 }
