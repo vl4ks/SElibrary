@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const descElement = document.getElementById('bookDescription')
     const subjectsElement = document.getElementById('bookSubjects')
     const coverImage = document.getElementById('bookCoverImage')
+    const coverNav = document.querySelector('.cover-nav')
     const prevButton = document.getElementById('prevCover')
     const nextButton = document.getElementById('nextCover')
 
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         covers = coversData
         currentCoverIndex = 0
+        coverNav.style.display = covers.length > 1 ? 'flex' : 'none'
         updateCover()
     }
 
@@ -68,13 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     prevButton.addEventListener('click', () => {
-        if (covers.length === 0) return
+        if (covers.length <= 1) return
         currentCoverIndex = (currentCoverIndex - 1 + covers.length) % covers.length
         updateCover()
     })
 
     nextButton.addEventListener('click', () => {
-        if (covers.length === 0) return
+        if (covers.length <= 1) return
         currentCoverIndex = (currentCoverIndex + 1) % covers.length
         updateCover()
     })
