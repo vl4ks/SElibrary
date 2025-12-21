@@ -2,9 +2,11 @@ const reportService = require('../src/services/report.service');
 
 jest.mock('../src/repositories/history.repository');
 jest.mock('../src/repositories/book.repository');
+jest.mock('../src/repositories/customer.repository');
 
 const historyRepository = require('../src/repositories/history.repository');
 const bookRepository = require('../src/repositories/book.repository');
+const customerRepository = require('../src/repositories/customer.repository');
 
 describe('ReportService', () => {
     beforeEach(() => {
@@ -22,6 +24,7 @@ describe('ReportService', () => {
                 if (id === 1) return Promise.resolve({ title: 'Book 1' });
                 if (id === 2) return Promise.resolve({ title: 'Book 2' });
             });
+            customerRepository.findById.mockResolvedValue({ name: 'Customer Name' });
 
             const result = await reportService.getReminders();
 
@@ -38,22 +41,26 @@ describe('ReportService', () => {
             const mockRows = [{ historyID: 1, bookID: 1 }];
             bookRepository.findById.mockResolvedValue(mockBook);
             historyRepository.findByParameters.mockResolvedValue(mockRows);
+            customerRepository.findById.mockResolvedValue({ name: 'Customer Name' });
 
             const result = await reportService.search(1, null);
 
             expect(bookRepository.findById).toHaveBeenCalledWith(1);
             expect(historyRepository.findByParameters).toHaveBeenCalledWith(1, null);
-            expect(result).toEqual({ rows: mockRows, book: mockBook });
+            expect(result.rows).toEqual([{ ...mockRows[0], customerName: 'Customer Name' }]);
+            expect(result.book).toEqual(mockBook);
         });
 
         test('should search by bookTitle', async () => {
             const mockRows = [{ historyID: 1, bookID: 1 }];
             historyRepository.findByParameters.mockResolvedValue(mockRows);
+            customerRepository.findById.mockResolvedValue({ name: 'Customer Name' });
 
             const result = await reportService.search(null, 'Book Title');
 
             expect(historyRepository.findByParameters).toHaveBeenCalledWith(null, 'Book Title');
-            expect(result).toEqual({ rows: mockRows, book: undefined });
+            expect(result.rows).toEqual([{ ...mockRows[0], customerName: 'Customer Name' }]);
+            expect(result.book).toBeUndefined();
         });
 
         test('should throw error if both bookId and bookTitle provided', async () => {
@@ -65,10 +72,11 @@ describe('ReportService', () => {
             const mockRows = [{ historyID: 1, bookID: 1, action: 'issued' }];
             bookRepository.findById.mockResolvedValue(mockBook);
             historyRepository.findByParameters.mockResolvedValue(mockRows);
+            customerRepository.findById.mockResolvedValue({ name: 'Customer Name' });
 
             const result = await reportService.search(1, null);
 
-            expect(result.rows).toEqual(mockRows);
+            expect(result.rows).toEqual([{ ...mockRows[0], customerName: 'Customer Name' }]);
             expect(result.book).toEqual(mockBook);
         });
     });

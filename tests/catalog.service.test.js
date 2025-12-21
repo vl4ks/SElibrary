@@ -26,7 +26,7 @@ describe('CatalogService', () => {
 
             const result = await catalogService.search('Potter', null, null, 1);
 
-            expect(bookRepository.findByParameters).toHaveBeenCalledWith('Potter', null, null, 10, 0);
+            expect(bookRepository.findByParameters).toHaveBeenCalledWith('Potter', null, null, 50, 0);
             expect(result.rows).toHaveLength(2);
             expect(result.rows[0].book).toBe('Harry Potter and the Philosopher\'s Stone');
             expect(result.total).toBe(2);
@@ -41,7 +41,7 @@ describe('CatalogService', () => {
 
             const result = await catalogService.search(null, 'Rowling', null, 1);
 
-            expect(bookRepository.findByParameters).toHaveBeenCalledWith(null, 'Rowling', null, 10, 0);
+            expect(bookRepository.findByParameters).toHaveBeenCalledWith(null, 'Rowling', null, 50, 0);
             expect(result.rows).toHaveLength(1);
             expect(result.rows[0].authors[0].name).toBe('J.K. Rowling');
         });
@@ -55,7 +55,7 @@ describe('CatalogService', () => {
 
             const result = await catalogService.search('Harry', 'Rowling', 'Fiction', 1);
 
-            expect(bookRepository.findByParameters).toHaveBeenCalledWith('Harry', 'Rowling', 'Fiction', 10, 0);
+            expect(bookRepository.findByParameters).toHaveBeenCalledWith('Harry', 'Rowling', 'Fiction', 50, 0);
             expect(result.rows).toHaveLength(1);
         });
 
@@ -66,7 +66,7 @@ describe('CatalogService', () => {
 
             const result = await catalogService.search('Book', null, null, 2);
 
-            expect(bookRepository.findByParameters).toHaveBeenCalledWith('Book', null, null, 10, 10); // page 2, offset 10
+            expect(bookRepository.findByParameters).toHaveBeenCalledWith('Book', null, null, 50, 50); // page 2, offset 50
             expect(result.rows).toHaveLength(10);
             expect(result.total).toBe(60);
         });
