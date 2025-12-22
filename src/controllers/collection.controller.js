@@ -1,3 +1,5 @@
+const { BadRequestError } = require('../errors');
+
 class CollectionController {
     constructor(service) {
         this.service = service;
@@ -23,28 +25,19 @@ class CollectionController {
     }
 }
 
-async update(req, res) {
-    if (!req.session.user) {
-        return res.status(401).json({ error: "Unauthorized" });
-    }
-    try {
-        await this.service.update(req.params.id, req.body);
-        res.sendStatus(204);
-    } catch (err) {
-        if (err instanceof BadRequestError) {
-            return res.status(400).json({ error: err.message });
-        }
-        throw err;
-    }
-}
-
-
     async update(req, res) {
         if (!req.session.user) {
             return res.status(401).json({ error: "Unauthorized" });
         }
-        await this.service.update(req.params.id, req.body);
-        res.sendStatus(204);
+        try {
+            await this.service.update(req.params.id, req.body);
+            res.sendStatus(204);
+        } catch (err) {
+            if (err instanceof BadRequestError) {
+                return res.status(400).json({ error: err.message });
+            }
+            throw err;
+        }
     }
 
     async delete(req, res) {

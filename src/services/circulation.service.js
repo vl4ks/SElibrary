@@ -1,5 +1,6 @@
 const historyRepository = require("../repositories/history.repository");
 const customerRepository = require("../repositories/customer.repository");
+const bookRepository = require("../repositories/book.repository");
 const History = require("../models/history");
 const { BadRequestError, NotFoundError } = require("../errors");
 const db = require("../../db");
@@ -32,16 +33,21 @@ class CirculationService {
         throw new BadRequestError("Book ID and Customer ID are required");
     }
 
-    const allRecords = await historyRepository.findByCustomerId(customerId);
-
-    const activeBooks = allRecords.filter(r => r.status === false); 
-    if (activeBooks.length >= 5) {
-        throw new BadRequestError("Нельзя выдать больше 5 книг одному пользователю");
+    const customer = await customerRepository.findById(customerId);
+    if (!customer) {
+        throw new NotFoundError("Customer not found");
     }
 
-    const bookTitle = await this.getBookTitleById(bookId);
-    if (!bookTitle) {
+    const book = await bookRepository.findById(bookId);
+    if (!book) {
         throw new NotFoundError("Book not found");
+    }
+
+    const allRecords = await historyRepository.findByCustomerId(customerId);
+
+    const activeBooks = allRecords.filter(r => r.status === false);
+    if (activeBooks.length >= 5) {
+        throw new BadRequestError("Нельзя выдать больше 5 книг одному пользователю");
     }
 
     const issueDate = new Date();
@@ -51,7 +57,7 @@ class CirculationService {
     const history = new History(
         null,
         bookId,
-        bookTitle,
+        book.title,
         customerId,
         issueDate,
         returnDate,
@@ -66,14 +72,14 @@ class CirculationService {
 
 
     async return(bookId, customerId) {
-        const bookTitle = await this.getBookTitleById(bookId);
-        if (!bookTitle) {
-            throw new NotFoundError("Book not found");
+        const book = await bookRepository.findById(bookId);
+        if (!book) {
+            throw new NotFoundError("Book not found in the catalog");
         }
 
         const customer = await customerRepository.findById(customerId);
         if (!customer) {
-            throw new NotFoundError("Customer not found");
+            throw new NotFoundError("Customer not found in the system");
         }
 
         const allRecords = await historyRepository.findByCustomerId(customerId);
@@ -101,9 +107,19 @@ class CirculationService {
     }
 
     async renew(bookId, customerId) {
+    const customer = await customerRepository.findById(customerId);
+    if (!customer) {
+        throw new NotFoundError("Customer not found in the system");
+    }
+
+    const book = await bookRepository.findById(bookId);
+    if (!book) {
+        throw new NotFoundError("Book not found in the catalog");
+    }
+
     const allRecords = await historyRepository.findByCustomerId(customerId);
     const activeRecord = allRecords.find(
-        r => r.bookID.toLowerCase() === bookId.toLowerCase() && r.status === false
+        r => r.bookID === bookId && r.status === false
     );
 
     if (!activeRecord) {
