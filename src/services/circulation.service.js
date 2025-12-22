@@ -47,7 +47,7 @@ class CirculationService {
 
     const activeBooks = allRecords.filter(r => r.status === false);
     if (activeBooks.length >= 5) {
-        throw new BadRequestError("Нельзя выдать больше 5 книг одному пользователю");
+        throw new BadRequestError("Cannot issue more than 5 books");
     }
 
     const issueDate = new Date();
@@ -133,7 +133,7 @@ class CirculationService {
     maxReturnDate.setDate(maxReturnDate.getDate() + 28);
 
     if (currentReturnDate > maxReturnDate - 1) { 
-        throw new BadRequestError("Продлевать можно только один раз");
+        throw new BadRequestError("You can renew only once");
     }
 
     let extendedReturnDate = currentReturnDate instanceof Date && !isNaN(currentReturnDate)

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(`/api/customer/search?${params.toString()}`);
 
             if (!response.ok) {
-                throw new Error("Ошибка при поиске клиентов");
+                throw new Error("Error trying to find clients");
             }
 
             const customers = await response.json();

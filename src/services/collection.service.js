@@ -35,7 +35,7 @@ class CollectionService {
             );
 
             if (result.rows.length === 0) {
-                throw new BadRequestError(`Книга "${b.title}" не найдена`);
+                throw new BadRequestError(`Book "${b.title}" is not found`);
             }
         }
     }

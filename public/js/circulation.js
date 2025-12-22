@@ -30,11 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
     searchForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const customerId = customerIdInput.value.trim();
-        if (!customerId) return alert("Введите Customer ID");
+        if (!customerId) return alert("Enter Customer ID");
 
         try {
             const response = await fetch(`/api/circulation/customer/${customerId}`);
-            if (!response.ok) throw new Error("Клиент не найден");
+            if (!response.ok) throw new Error("Client is not found");
 
             const data = await response.json();
             currentCustomerId = customerId;
@@ -79,12 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!currentCustomerId) return;
 
             if (action !== "renew" && !bookId) {
-                alert("Введите Book ID");
+                alert("Enter Book ID");
                 return;
             }
 
             if (action === "renew" && !selectedRow) {
-                alert("Выберите строку для продления");
+                alert("Choose string to renew");
                 return;
             }
 
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
                 if (!response.ok) {
-                    alert(result.message || "Ошибка");
+                    alert(result.message || "You can only renew once");
                     return;
                 }
 
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function populateTable(tbody, records, isHistory = false) {
         tbody.innerHTML = "";
         if (!records || records.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="3">Нет записей</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="3">No records</td></tr>`;
             return;
         }
 
